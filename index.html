@@ -1,423 +1,316 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LoRa APRS NRF52840 Web Config</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      padding: 20px;
-    }
-    
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      padding: 30px;
-    }
-    
-    h1 {
-      color: #333;
-      margin-bottom: 10px;
-      font-size: 24px;
-    }
-    
-    .status-section {
-      margin-bottom: 25px;
-      padding: 15px;
-      background: #f5f5f5;
-      border-radius: 8px;
-    }
-    
-    #status {
-      font-size: 14px;
-      font-weight: bold;
-      padding: 8px 0;
-    }
-    
-    .status-disconnected {
-      color: #dc3545;
-    }
-    
-    .status-connected {
-      color: #28a745;
-    }
-    
-    #connectBtn {
-      padding: 12px 20px;
-      font-size: 16px;
-      background: #667eea;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
-      width: 100%;
-      margin-bottom: 10px;
-    }
-    
-    #connectBtn:hover:not(:disabled) {
-      background: #5568d3;
-    }
-    
-    #connectBtn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    
-    form {
-      display: none;
-    }
-    
-    form.active {
-      display: block;
-    }
-    
-    .form-section {
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .form-section:last-child {
-      border-bottom: none;
-    }
-    
-    .form-section h3 {
-      font-size: 14px;
-      color: #667eea;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    label {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-      font-size: 14px;
-      color: #555;
-    }
-    
-    label input[type="text"],
-    label input[type="number"] {
-      flex: 1;
-      margin-left: 10px;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-    }
-    
-    label input[type="checkbox"] {
-      margin-left: 10px;
-      cursor: pointer;
-    }
-    
-    label input[type="text"]:focus,
-    label input[type="number"]:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
-    }
-    
-    .button-group {
-      display: flex;
-      gap: 10px;
-      margin-top: 25px;
-    }
-    
-    button[type="submit"],
-    #sendDeleteCommandButton {
-      flex: 1;
-      padding: 12px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s;
-    }
-    
-    button[type="submit"] {
-      background: #28a745;
-      color: white;
-    }
-    
-    button[type="submit"]:hover:not(:disabled) {
-      background: #218838;
-    }
-    
-    #sendDeleteCommandButton {
-      background: #dc3545;
-      color: white;
-    }
-    
-    #sendDeleteCommandButton:hover:not(:disabled) {
-      background: #c82333;
-    }
-    
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-    
-    .message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 6px;
-      font-size: 14px;
-      display: none;
-    }
-    
-    .message.show {
-      display: block;
-    }
-    
-    .message.success {
-      background: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-    }
-    
-    .message.error {
-      background: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-    }
-    
-    .message.info {
-      background: #d1ecf1;
-      color: #0c5460;
-      border: 1px solid #bee5eb;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CA2RXU NRF52840 Firmware Download</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #0d0d0d;
+            color: #ececec;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #2a2a2a;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            border: 1px solid #3c3c3c;
+        }
+
+        .title-main {
+            text-align: center;
+            font-weight: bold;
+            font-size: 28px;
+            color: #ececec;
+            margin-bottom: 10px;
+        }
+
+        .download-section {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #d0d0d0;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #4a4a4a;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #3a3a3a;
+            color: #ececec;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:hover {
+            border-color: #667eea;
+            background-color: #424242;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            background-color: #424242;
+        }
+
+        select option {
+            background-color: #3a3a3a;
+            color: #ececec;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;   
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download {
+            background: #218838;
+            color: white;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(33, 136, 56, 0.4);
+            background: #1e7e34;
+        }
+
+        .btn-download:active {
+            transform: translateY(0);
+        }
+
+        .btn-download:disabled {
+            background: #744d4d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .info-box {
+            background: #3a3a3a;
+            border-left: 4px solid #3456ec;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .info-box p {
+            color: #d0d0d0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: #ececec;
+        }
+
+        .configurator-section {
+            margin-top: 30px;
+        }
+
+        .configurator-section label {
+            display: block;
+            color: #d0d0d0;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .configurator-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+        }
+
+        .btn-configurator {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #2a4bde;
+            color: white;
+        }
+
+        .btn-configurator:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(72, 199, 103, 0.4);
+            background: #218838;
+        }
+
+        .btn-configurator:active {
+            transform: translateY(0);
+        }
+
+        .card-footer {
+            color: #ccc;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .sponsor-links {
+            display: flex;
+            justify-content: center; /* centra horizontalmente */
+            align-items: center;      /* centra verticalmente */
+            gap: 16px;                /* espacio entre elementos */
+            margin-top: 10px;
+        }
+
+        .divider {
+            font-size: 20px;
+            color: #888;
+        }
+
+
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🛰️ LoRa APRS NRF52840 Digi Web Config</h1>
-    
-    <div class="status-section">
-      <button id="connectBtn">🔌 Conectar a NRF52840</button>
-      <p id="status" class="status-disconnected">❌ No conectado</p>
-    </div>
-    
-    <div id="message" class="message"></div>
-    
-    <form id="LoRaAPRSDigiForm">
-      <!-- APRS Settings -->
-      <div class="form-section">
-        <h3>📡 Configuración APRS</h3>
-        <label>Callsign: <input type="text" id="callsign" required></label>
-        <label>Digi Mode: <input type="number" id="digiMode" min="0" max="2" step="1"></label>
-        <label>Symbol: <input type="text" id="symbol"></label>
-        <label>Overlay: <input type="text" id="overlay"></label>
-        <label>Comment: <input type="text" id="comment"></label>
-      </div>
-      
-      <!-- Position -->
-      <div class="form-section">
-        <h3>📍 Posición</h3>
-        <label>Latitude: <input type="number" id="latitude" step="any"></label>
-        <label>Longitude: <input type="number" id="longitude" step="any"></label>
-      </div>
-      
-      <!-- Telemetry -->
-      <div class="form-section">
-        <h3>📊 Telemetría</h3>
-        <label><input type="checkbox" id="sendBatteryTelemetry"> Send Battery Telemetry</label>
-        <label>Beacon Interval (s): <input type="number" id="beaconInterval" min="15" step="5"></label>
-        <label><input type="checkbox" id="digiUltraEcoMode"> Digi Ultra Eco Mode</label>
-        <label><input type="checkbox" id="wxSensorActive"> Wx Sensor Active</label>
-      </div>
-      
-      <!-- LoRa Settings -->
-      <div class="form-section">
-        <h3>📶 Configuración LoRa</h3>
-        <label>Frequency (Hz): <input type="number" id="frequency" min="430000000" max="928000000"></label>
-        <label>Spreading Factor: <input type="number" id="spreadingfactor" min="7" max="12"></label>
-        <label>Coding Rate (4/X): <input type="number" id="codingrate4" min="5" max="8"></label>
-        <label>Signal Bandwidth (Hz): <input type="number" id="signalbandwidth" min="62.5" max="500.0" step="0.1"></label>
-        <label>Power (dBm): <input type="number" id="power" min="2" max="22"></label>
-      </div>
-      
-      <div class="button-group">
-        <button type="submit">✅ Enviar Configuración</button>
-        <button type="button" id="sendDeleteCommandButton" disabled>🗑️ Delete Config</button>
-      </div>
-    </form>
-  </div>
+    <div class="container">
+        <h1 class="title-main">CA2RXU - LoRa APRS NRF52840 Firmwares</h1>
 
-  <script>
-    let port;
-    let writer;
-    
-    // Mostrar mensaje
-    function showMessage(text, type = 'info') {
-      const msgEl = document.getElementById('message');
-      msgEl.textContent = text;
-      msgEl.className = `message show ${type}`;
-      setTimeout(() => msgEl.classList.remove('show'), 5000);
-    }
-    
-    // Actualizar estado
-    function updateStatus(connected) {
-      const statusEl = document.getElementById('status');
-      const connectBtn = document.getElementById('connectBtn');
-      const form = document.getElementById('LoRaAPRSDigiForm');
-      const sendDeleteBtn = document.getElementById('sendDeleteCommandButton');
-      
-      if (connected) {
-        statusEl.textContent = '✅ Conectado a NRF52840';
-        statusEl.className = 'status-connected';
-        connectBtn.disabled = true;
-        connectBtn.textContent = '🔌 Desconectar';
-        form.classList.add('active');
-        sendDeleteBtn.disabled = false;
-      } else {
-        statusEl.textContent = '❌ No conectado';
-        statusEl.className = 'status-disconnected';
-        connectBtn.disabled = false;
-        connectBtn.textContent = '🔌 Conectar a NRF52840';
-        form.classList.remove('active');
-        sendDeleteBtn.disabled = true;
-      }
-    }
-    
-    // Conectar/desconectar serial
-    document.getElementById('connectBtn').addEventListener('click', async () => {
-      if (port) {
-        // Desconectar
-        try {
-          await port.close();
-          port = null;
-          writer = null;
-          updateStatus(false);
-          showMessage('Desconectado del NRF52840', 'info');
-        } catch (error) {
-          showMessage('Error al desconectar: ' + error.message, 'error');
+        <div class="download-section">
+            <select id="fileSelector">
+                <option value="">-- Select your firmware --</option>
+                <option value="https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/firmwares/NRF52840_deleteConfig.uf2">Erase/Delete All Configuration from Board</option>
+                <option value="https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/firmwares/firmware_RAK4631_Tracker_2025_06_23_SH1106.uf2">TRACKER - RAK4631 - SH1106</option>
+                <option value="https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/firmwares/firmware_HELTEC_MESHNODE_T114_Tracker_2025_08_11.uf2">TRACKER - Heltec MeshNode T114</option>
+                <option value="https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/firmwares/firmware_FAKETEC_digipeater_2025_08_11.uf2">DIGIPEATER - Faketec V3/V5</option>
+                <option value="https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/firmwares/firmware_HELTEC_MESHNODE_T114_digipeater_2025_08_11.uf2">DIGIPEATER - Heltec MeshNode T114</option>
+                <option value="https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/firmwares/firmware_MESHGATE_LITE_v1_digipeater_2025_08_11.uf2">DIGIPEATER - MeshGate V1.0</option>
+            </select>
+
+            <div class="button-group">
+                <button class="btn-download" id="downloadBtn" onclick="downloadFile()" disabled>
+                    Download Firmware
+                </button>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <p><strong>💡 Instructions:</strong></p>
+            <p>1. Select the firmware for your board<br>
+               2. Click on "Download Firmware"<br>
+               3. The firmware download will start automatically<br>
+               4. Double press the RST button on your board (a folder will appear on your PC)<br>
+               5. Copy the .uf2 firmware file into the board's folder<br>
+               6. The board will restart automatically<br>
+               7. Access the Web Configurator for your station and follow the guidelines
+            </p>
+        </div>
+
+        <div class="configurator-section">
+            <label>Web Configurators:</label>
+            <div class="configurator-buttons">
+                <button class="btn-configurator" onclick="window.location.href='https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/CA2RXU_LoRa_APRS_Tracker_Web_Configurator.html'">
+                    TRACKER
+                </button>
+                <button class="btn-configurator" onclick="window.location.href='https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/CA2RXU_LoRa_APRS_Digipeater_Web_Configurator.html'">
+                    DIGIPEATER
+                </button>
+                <button class="btn-configurator" onclick="window.location.href='https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/CA2RXU_LoRa_APRS_TNC_Web_Configurator.html'">
+                    TNC
+                </button>
+            </div>
+        </div>
+        <br>
+        <div class="card-footer text-center">
+            &copy; 2025 CA2RXU
+            <br>
+            <div class="sponsor-links">
+                <a href="http://paypal.me/richonguzman" target="_blank">
+                    <img 
+                        src="https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/images/paypalme.png"
+                        alt="PayPal.Me"
+                        width="200">
+                </a>
+                <span class="divider">|</span>
+                <a href="https://github.com/sponsors/richonguzman" target="_blank">
+                    <img 
+                        src="https://raw.githubusercontent.com/richonguzman/lora-aprs-nrf52840-web-config/main/images/github-sponsors.png"
+                        alt="Github Sponsors"
+                        width="200">                                
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const select = document.getElementById('fileSelector');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        // Enable/disable button based on selection
+        select.addEventListener('change', function() {
+            if (this.value) {
+                downloadBtn.disabled = false;
+            } else {
+                downloadBtn.disabled = true;
+            }
+        });
+
+        function downloadFile() {
+            const url = select.value;
+            
+            if (url) {
+                // Create a temporary link to force download
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = ''; // Download file instead of opening it
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                // Visual feedback
+                downloadBtn.textContent = '✓ Downloading...';
+                setTimeout(() => {
+                    downloadBtn.textContent = 'Download Firmware';
+                }, 2000);
+            } else {
+                alert('Please select a firmware first');
+            }
         }
-      } else {
-        // Conectar
-        try {
-          port = await navigator.serial.requestPort();
-          await port.open({ baudRate: 115200 });
-          writer = port.writable.getWriter();
-          updateStatus(true);
-          showMessage('✅ Conectado exitosamente', 'success');
-        } catch (error) {
-          showMessage('Error de conexión: ' + error.message, 'error');
-          port = null;
-          writer = null;
-        }
-      }
-    });
-    
-    // Enviar JSON
-    async function sendJSON(dataObj) {
-      if (!writer) {
-        showMessage('Por favor, conecta el dispositivo primero', 'error');
-        return false;
-      }
-      
-      try {
-        const encoder = new TextEncoder();
-        const jsonData = JSON.stringify(dataObj);
-        await writer.write(encoder.encode(jsonData + "\n"));
-        showMessage('✅ Datos enviados: ' + jsonData, 'success');
-        return true;
-      } catch (error) {
-        showMessage('Error al enviar: ' + error.message, 'error');
-        return false;
-      }
-    }
-    
-    // Validar campos numéricos
-    function validateForm() {
-      const freq = parseFloat(document.getElementById('frequency').value);
-      const sf = parseInt(document.getElementById('spreadingfactor').value);
-      const cr = parseInt(document.getElementById('codingrate4').value);
-      const bw = parseFloat(document.getElementById('signalbandwidth').value);
-      const power = parseInt(document.getElementById('power').value);
-      
-      if (freq && (freq < 430000000 || freq > 928000000)) {
-        showMessage('Frecuencia out of range (430-928 MHz)', 'error');
-        return false;
-      }
-      
-      if (sf && (sf < 7 || sf > 12)) {
-        showMessage('Spreading Factor must be 7-12', 'error');
-        return false;
-      }
-      
-      if (cr && (cr < 5 || cr > 8)) {
-        showMessage('Coding Rate must be 5-8', 'error');
-        return false;
-      }
-      
-      if (bw && (bw < 62.5 || bw > 500.0)) {
-        showMessage('Bandwidth out of range (62.5KHz-500KHz)', 'error');
-        return false;
-      }
-      
-      if (power && (power < 2 || power > 22)) {
-        showMessage('Power must be 2-22 dBm', 'error');
-        return false;
-      }
-      
-      return true;
-    }
-    
-    // Submit form
-    document.getElementById('LoRaAPRSDigiForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      if (!validateForm()) return;
-      
-      const data = {
-        callsign: document.getElementById('callsign').value,
-        digiMode: parseInt(document.getElementById("digiMode").value) || 0,
-        symbol: document.getElementById('symbol').value,
-        overlay: document.getElementById('overlay').value,
-        comment: document.getElementById('comment').value,
-        latitude: parseFloat(document.getElementById('latitude').value) || 0.0,
-        longitude: parseFloat(document.getElementById('longitude').value) || 0.0,
-        sendBatteryTelemetry: document.getElementById('sendBatteryTelemetry').checked,
-        beaconInterval: parseInt(document.getElementById('beaconInterval').value) || 15,
-        digiUltraEcoMode: document.getElementById('digiUltraEcoMode').checked,
-        wxSensorActive: document.getElementById('wxSensorActive').checked,
-        frequency: parseFloat(document.getElementById('frequency').value) || 433775000,
-        spreadingFactor: parseInt(document.getElementById('spreadingfactor').value) || 12,
-        codingRate4: parseInt(document.getElementById('codingrate4').value) || 5,
-        signalBandwidth: parseFloat(document.getElementById('signalbandwidth').value) || 125.0,
-        power: parseInt(document.getElementById('power').value) || 20      
-      };
-      
-      await sendJSON(data);
-    });
-    
-    // Delete command
-    document.getElementById('sendDeleteCommandButton').addEventListener('click', async () => {
-      if (confirm('¿Estás seguro de que deseas enviar el comando de eliminación?')) {
-        await sendJSON({ command: 0 });
-      }
-    });
-    
-    // Inicializar estado
-    updateStatus(false);
-  </script>
+
+        // Allow download with Enter key
+        select.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value) {
+                downloadFile();
+            }
+        });
+    </script>
 </body>
 </html>
