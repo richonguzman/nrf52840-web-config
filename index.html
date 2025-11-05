@@ -207,22 +207,34 @@
         <div class="download-section">
             <select id="fileSelector">
                 <option value="">-- Select your firmware --</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_GAT562_PRO_2025_11_06.uf2">TRACKER - GAT562 PRO (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_Heltec_MeshNode_T114_2025_11_06.uf2">TRACKER - Heltec MeshNode T114 (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_RAK4631_SSD1306_2025_11_06.uf2">TRACKER - RAK4631 (L76K + SSD1306) (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_RAK4631_SH1106_2025_11_06.uf2">TRACKER - RAK4631 (L76K + SH1106) (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_FakeTec_SSD1306_2025_11_06.uf2">TRACKER - FakeTec (L76K + SSD1306) (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_FakeTec_SH1106_2025_11_06.uf2">TRACKER - FakeTec (L76K + SH1106) (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Digipeater_RAK4631_2025_11_06.uf2">DIGIPEATER - RAK4631 (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Digipeater_MeshGate_Lite_V1_2025_11_06.uf2">DIGIPEATER - MeshGate Lite V1 (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Digipeater_Heltec_MeshNode_T114_2025_11_06.uf2">DIGIPEATER - Heltec MeshNode T114 (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Digipeater_FakeTec_2025_11_06.uf2">DIGIPEATER - FakeTec (V3/V4/V5) (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_TNC_RAK4631_2025_11_06.uf2">TNC - RAK4631 (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_TNC_MeshGate_Lite_V1_2025_11_06.uf2">TNC - MeshGate Lite V1 (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_TNC_Heltec_MeshNode_T114_2025_11_06.uf2">TNC - Heltec MeshNode T114 (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_TNC_Heltec_MeshPocket_2025_11_06.uf2">TNC - Heltec MeshPocket (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_TNC_FakeTec_2025_11_06.uf2">TNC - FakeTec (V3/V4/V5) (2025-11-06)</option>
-                <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_deleteConfig.uf2">Erase/Delete All Configuration from Board</option>
+
+                <optgroup label="TRACKER">
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_GAT562_PRO_2025_11_06.uf2">GAT562 PRO (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_Heltec_MeshNode_T114_2025_11_06.uf2">Heltec MeshNode T114 (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_RAK4631_SSD1306_2025_11_06.uf2">RAK4631 (L76K + SSD1306) (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_RAK4631_SH1106_2025_11_06.uf2">RAK4631 (L76K + SH1106) (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_FakeTec_SSD1306_2025_11_06.uf2">FakeTec (L76K + SSD1306) (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Tracker_FakeTec_SH1106_2025_11_06.uf2">FakeTec (L76K + SH1106) (2025-11-06)</option>
+                </optgroup>
+                
+                <optgroup label="DIGIPEATER">
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Digipeater_RAK4631_2025_11_06.uf2">RAK4631 (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Digipeater_MeshGate_Lite_V1_2025_11_06.uf2">MeshGate Lite V1 (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Digipeater_Heltec_MeshNode_T114_2025_11_06.uf2">Heltec MeshNode T114 (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_Digipeater_FakeTec_2025_11_06.uf2">FakeTec (V3/V4/V5) (2025-11-06)</option>
+                </optgroup>
+                
+                <optgroup label="TNC">
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_TNC_RAK4631_2025_11_06.uf2">RAK4631 (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_TNC_MeshGate_Lite_V1_2025_11_06.uf2">MeshGate Lite V1 (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_TNC_Heltec_MeshNode_T114_2025_11_06.uf2">Heltec MeshNode T114 (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_TNC_Heltec_MeshPocket_2025_11_06.uf2">Heltec MeshPocket (2025-11-06)</option>
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_TNC_FakeTec_2025_11_06.uf2">FakeTec (V3/V4/V5) (2025-11-06)</option>
+                </optgroup>
+                
+                <optgroup label="UTILITIES">
+                    <option value="https://raw.githubusercontent.com/richonguzman/nrf52840-web-config/main/firmwares/NRF52840_deleteConfig.uf2">Erase/Delete All Configuration</option>
+                </optgroup>
             </select>
 
             <div class="button-group">
