@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CA2RXU WebConfig</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #0d0d0d;
+            color: #ececec;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #3c3c3c;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            padding: 32px;
+            border: 1px solid #2a2a2a;
+        }
+
+        h1 { 
+            color: #ffffff; 
+            text-align: center; 
+            margin-bottom: 20px; 
+            font-size: 22px; 
+            line-height: 1.4; 
+        }
+
+        .status-section {
+            margin-bottom: 25px;
+            padding: 18px;
+            background: #212121;
+            border-radius: 10px;
+            border: 1px solid #2a2a2a;
+        }
+
+        #status {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 0;
+        }
+
+        .status-disconnected {
+            color: #ff4f5a;
+        }
+
+        .status-connected {
+            color: #4effa3;
+        }
+
+        #connectBtn {
+            padding: 12px 20px;
+            font-size: 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        #connectBtn:hover:not(:disabled) {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        #connectBtn:disabled {
+            background: #2a2a2a;
+            cursor: not-allowed;
+        }
+
+        form {
+            display: none;
+        }
+
+        form.active {
+            display: block;
+        }
+
+        .form-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .form-section h3 {
+            font-size: 13px;
+            color: #a0a0a0;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .beacon-card {
+            background: #212121;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .beacon-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4effa3;
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #b4b4b4;
+            font-weight: 500;
+        }
+
+        label span {
+            margin-bottom: 6px;
+        }
+
+        label input[type="text"],
+        label input[type="number"],
+        label select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #212121;
+            color: #ececec;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row-5 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row-beacon {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 1.5fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row label,
+        .form-row-3 label,
+        .form-row-4 label,
+        .form-row-5 label,
+        .form-row-beacon label {
+            margin-bottom: 0;
+        }
+
+        label input[type="checkbox"] {
+            margin-left: 0;
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #2563eb;
+        }
+
+        .checkbox-label {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        label input[type="text"]:focus,
+        label input[type="number"]:focus,
+        label select:focus {
+            outline: none;
+            border-color: #2563eb;
+            background-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        label input[type="text"]:hover,
+        label input[type="number"]:hover,
+        label select:hover {
+            border-color: #3a3a3a;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button[type="submit"] {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            background: #28a745;
+            color: white;
+        }
+
+        button[type="submit"]:hover:not(:disabled) {
+            background: #218838;
+        }
+
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #1f3e2d; 
+            color: #7bffb3; 
+            border: 1px solid #35a066;
+        }
+
+        .message.error {
+            background: #3b1f1f;
+            color: #ff8a8a;
+            border: 1px solid #ff4f4f;
+        }
+        
+        .message.info {
+            background: #1f2a3b;
+            color: #a5c8ff;
+            border: 1px solid #667eea;
+        }
+
+        .lora-card {
+            background: #212121;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .lora-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffa34e;
+            margin-bottom: 12px;
+        }
+
+        /* Bootstrap-like switch style */
+        .form-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #b4b4b4;
+        }
+
+        .form-switch input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 40px;
+            height: 20px;
+            background-color: #444;
+            border-radius: 20px;
+            position: relative;
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: 1px solid #2a2a2a;
+        }
+
+        .form-switch input[type="checkbox"]::before {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #ececec;
+            border-radius: 50%;
+            top: 1.5px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .form-switch input[type="checkbox"]:checked {
+            background-color: #2563eb;
+        }
+
+        .form-switch input[type="checkbox"]:checked::before {
+            transform: translateX(20px);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CA2RXU - LoRa APRS<br>Tracker Web Configurator</h1>
+    
+        <div class="status-section">
+            <button id="connectBtn">Connect to the Board</button>
+            <p id="status" class="status-disconnected">Status: Not connected</p>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <form id="LoRaAPRSTrackerForm">
+            <!-- Beacons Configuration -->
+            <div class="form-section">
+                <h3>Beacons Configuration</h3>
+                
+                <div class="beacon-card">
+                    <div class="beacon-header">Beacon 1</div>
+                    <div class="form-row-beacon">
+                        <label>
+                            <span>Callsign</span>
+                            <input type="text" id="beacon1_callsign" value="NOCALL-7" required oninput="this.value = this.value.toUpperCase();">
+                        </label>
+                        <label>
+                            <span>Symbol</span>
+                            <input type="text" id="beacon1_symbol" value="[" maxlength="1">
+                        </label>
+                        <label>
+                            <span>Overlay</span>
+                            <input type="text" id="beacon1_overlay" value="/" maxlength="1">
+                        </label>
+                        <label>
+                            <span>Mic-E</span>
+                            <input type="text" id="beacon1_mic_e" value="" maxlength="3">
+                        </label>
+                    </div>
+                    <div class="form-row-3">
+                        <label>
+                            <span>Comment</span>
+                            <input type="text" id="beacon1_comment">
+                        </label>
+                        <label class="form-switch">
+                            <input type="checkbox" id="beacon1_smartBeaconActive" checked>
+                            Smart Beacon Active
+                        </label>
+                        <label>
+                            <span>Smart Beacon Setting</span>
+                            <select id="beacon1_smartBeaconSetting">
+                                <option value="0" selected>Human/Runner</option>
+                                <option value="1">Bicycle</option>
+                                <option value="2">Car/Truck</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label class="form-switch">
+                            <input type="checkbox" id="beacon1_gpsEcoMode">
+                            GPS Eco Mode
+                        </label>
+                    </div>
+                </div>
+
+                <div class="beacon-card">
+                    <div class="beacon-header">Beacon 2</div>
+                    <div class="form-row-beacon">
+                        <label>
+                            <span>Callsign</span>
+                            <input type="text" id="beacon2_callsign" value="NOCALL-7" required oninput="this.value = this.value.toUpperCase();">
+                        </label>
+                        <label>
+                            <span>Symbol</span>
+                            <input type="text" id="beacon2_symbol" value=">" maxlength="1">
+                        </label>
+                        <label>
+                            <span>Overlay</span>
+                            <input type="text" id="beacon2_overlay" value="/" maxlength="1">
+                        </label>
+                        <label>
+                            <span>Mic-E</span>
+                            <input type="text" id="beacon2_mic_e" value="" maxlength="3">
+                        </label>
+                    </div>
+                    <div class="form-row-3">
+                        <label>
+                            <span>Comment</span>
+                            <input type="text" id="beacon2_comment">
+                        </label>
+                        <label class="form-switch">
+                            <input type="checkbox" id="beacon2_smartBeaconActive" checked>
+                            Smart Beacon Active
+                        </label>
+                        <label>
+                            <span>Smart Beacon Setting</span>
+                            <select id="beacon2_smartBeaconSetting">
+                                <option value="0">Human/Runner</option>
+                                <option value="1">Bicycle</option>
+                                <option value="2" selected>Car/Truck</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label class="form-switch">
+                            <input type="checkbox" id="beacon2_gpsEcoMode">
+                            GPS Eco Mode
+                        </label>
+                    </div>
+                </div>
+
+                <div class="beacon-card">
+                    <div class="beacon-header">Beacon 3</div>
+                    <div class="form-row-beacon">
+                        <label>
+                            <span>Callsign</span>
+                            <input type="text" id="beacon3_callsign" value="NOCALL-7" oninput="this.value = this.value.toUpperCase();">
+                        </label>
+                        <label>
+                            <span>Symbol</span>
+                            <input type="text" id="beacon3_symbol" value="b" maxlength="1">
+                        </label>
+                        <label>
+                            <span>Overlay</span>
+                            <input type="text" id="beacon3_overlay" value="/" maxlength="1">
+                        </label>
+                        <label>
+                            <span>Mic-E</span>
+                            <input type="text" id="beacon3_mic_e" value="" maxlength="3">
+                        </label>
+                    </div>
+                    <div class="form-row-3">
+                        <label>
+                            <span>Comment</span>
+                            <input type="text" id="beacon3_comment">
+                        </label>
+                        <label class="form-switch">
+                            <input type="checkbox" id="beacon3_smartBeaconActive" checked>
+                            Smart Beacon Active
+                        </label>
+                        <label>
+                            <span>Smart Beacon Setting</span>
+                            <select id="beacon3_smartBeaconSetting">
+                                <option value="0">Human/Runner</option>
+                                <option value="1" selected>Bicycle</option>
+                                <option value="2">Car/Truck</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label class="form-switch">
+                            <input type="checkbox" id="beacon3_gpsEcoMode">
+                            GPS Eco Mode
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Station Configuration -->
+            <div class="form-section">
+                <h3>Station Configuration</h3>
+                <div class="form-row-3">
+                    <label>
+                        <span>Path</span>
+                        <select id="other_path">
+                            <option value="WIDE1-1" selected>WIDE1-1</option>
+                            <option value="WIDE1-1,WIDE2-1">WIDE1-1,WIDE2-1</option>
+                            <option value="WIDE1-1,WIDE2-2">WIDE1-1,WIDE2-2</option>
+                            <option value="WIDE2-1">WIDE2-1</option>
+                            <option value="WIDE2-2">WIDE2-2</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Send Comment After X Beacons</span>
+                        <input type="number" id="other_sendCommentAfterXBeacons" value="10" min="1">
+                    </label>
+                    <label>
+                        <span>Fixed Beacon Rate (min)</span>
+                        <input type="number" id="other_nonSmartBeaconRate" value="15" min="1">
+                    </label>
+                </div>
+                <div class="form-row-3">
+                    <label>
+                        <span>Standing Update Time (min)</span>
+                        <input type="number" id="other_standingUpdateTime" value="15" min="1">
+                    </label>
+                    <label>
+                        <span>Email</span>
+                        <input type="text" id="other_email" placeholder="optional">
+                    </label>
+                    <label>
+                        <span>Remember Station Time (min)</span>
+                        <input type="number" id="other_rememberStationTime" value="30" min="1">
+                    </label>
+                </div>
+                <div class="form-row-3">
+                    <label class="form-switch">
+                        <input type="checkbox" id="other_sendAltitude" checked>
+                        Send Encoded Altitude
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="other_disableGPS">
+                        Disable GPS
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="other_simplifiedTrackerMode">
+                        Simplified Tracker Mode<small>(Disables Buttons + Menu<br>only Tx GPS Beacon)</small>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Display Settings -->
+            <div class="form-section">
+                <h3>Display Settings</h3>
+                <div class="form-row-4">
+                    <label class="form-switch">
+                        <input type="checkbox" id="display_ecoMode">
+                        Eco Mode
+                    </label>
+                    <label>
+                        <span>Timeout (sec)</span>
+                        <input type="number" id="display_timeout" value="4" min="1">
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="display_showSymbol" checked>
+                        Show Symbol
+                    </label>                        
+                    <label class="form-switch">
+                        <input type="checkbox" id="display_turn180">
+                        Turn 180°
+                    </label>
+                </div>
+            </div>
+
+            <!-- Bluetooth Settings -->
+            <div class="form-section">
+                <h3>Bluetooth Settings</h3>
+                <div class="form-row-4">
+                    <label class="form-switch">
+                        <input type="checkbox" id="bluetooth_active">
+                        Active
+                    </label>
+                    <label>
+                        <span>Device Name</span>
+                        <input type="text" id="bluetooth_deviceName" value="LoRaTracker">
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="bluetooth_useKISS" checked>
+                        Use KISS
+                    </label>
+                </div>
+            </div>
+
+            <!-- LoRa Settings -->
+            <div class="form-section">
+                <h3>LoRa Configurations</h3>
+                
+                <div class="lora-card">
+                    <div class="lora-header">LoRa Config 1</div>
+                    <div class="form-row-5">
+                        <label>
+                            <span>Frequency (Hz)</span>
+                            <input type="number" id="lora1_frequency" value="433775000">
+                        </label>
+                        <label>
+                            <span>SF</span>
+                            <select id="lora1_spreadingFactor">
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12" selected>12</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>CR4</span>
+                            <select id="lora1_codingRate4">
+                                <option value="5" selected>5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>BW (KHz)</span>
+                            <select id="lora1_signalBandwidth"> 
+                                <option value="62.5">62.5 KHz</option>
+                                <option value="125.0" selected>125.0 KHz</option>
+                                <option value="250.0">250.0 KHz</option>
+                                <option value="500.0">500.0 KHz</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Power (dBm)</span>
+                            <input type="number" id="lora1_power" value="22" min="2" max="22">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="lora-card">
+                    <div class="lora-header">LoRa Config 2</div>
+                    <div class="form-row-5">
+                        <label>
+                            <span>Frequency (Hz)</span>
+                            <input type="number" id="lora2_frequency" value="434855000">
+                        </label>
+                        <label>
+                            <span>SF</span>
+                            <select id="lora2_spreadingFactor">
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9" selected>9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>CR4</span>
+                            <select id="lora2_codingRate4">
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7" selected>7</option>
+                                <option value="8">8</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>BW (KHz)</span>
+                            <select id="lora2_signalBandwidth"> 
+                                <option value="62.5">62.5 KHz</option>
+                                <option value="125.0" selected>125.0 KHz</option>
+                                <option value="250.0">250.0 KHz</option>
+                                <option value="500.0">500.0 KHz</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Power (dBm)</span>
+                            <input type="number" id="lora2_power" value="22" min="2" max="22">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="lora-card">
+                    <div class="lora-header">LoRa Config 3</div>
+                    <div class="form-row-5">
+                        <label>
+                            <span>Frequency (Hz)</span>
+                            <input type="number" id="lora3_frequency" value="439912500">
+                        </label>
+                        <label>
+                            <span>SF</span>
+                            <select id="lora3_spreadingFactor">
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12" selected>12</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>CR4</span>
+                            <select id="lora3_codingRate4">
+                                <option value="5" selected>5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>BW (KHz)</span>
+                            <select id="lora3_signalBandwidth"> 
+                                <option value="62.5">62.5 KHz</option>
+                                <option value="125.0" selected>125.0 KHz</option>
+                                <option value="250.0">250.0 KHz</option>
+                                <option value="500.0">500.0 KHz</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Power (dBm)</span>
+                            <input type="number" id="lora3_power" value="22" min="2" max="22">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="lora-card">
+                    <div class="lora-header">LoRa Config 4</div>
+                    <div class="form-row-5">
+                        <label>
+                            <span>Frequency (Hz)</span>
+                            <input type="number" id="lora4_frequency" value="915000000">
+                        </label>
+                        <label>
+                            <span>SF</span>
+                            <select id="lora4_spreadingFactor">
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12" selected>12</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>CR4</span>
+                            <select id="lora4_codingRate4">
+                                <option value="5" selected>5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>BW (KHz)</span>
+                            <select id="lora4_signalBandwidth"> 
+                                <option value="62.5">62.5 KHz</option>
+                                <option value="125.0" selected>125.0 KHz</option>
+                                <option value="250.0">250.0 KHz</option>
+                                <option value="500.0">500.0 KHz</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Power (dBm)</span>
+                            <input type="number" id="lora4_power" value="22" min="2" max="22">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Battery Settings -->
+            <div class="form-section">
+                <h3>Battery Settings</h3>
+                <div class="form-row-3">
+                    <label class="form-switch">
+                        <input type="checkbox" id="battery_sendVoltage">
+                        Send Voltage in GPS Beacon
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="battery_voltageAsTelemetry">
+                        Send as Encoded Telemetry
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="battery_sendVoltageAlways">
+                        Force Sending Voltage Info in every GPS Beacon
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label class="form-switch">
+                        <input type="checkbox" id="battery_monitorVoltage">
+                        Monitor Battery Voltage and power-off/sleep if low
+                    </label>
+                    <label>
+                        <span>Voltage power-off sleep</span>
+                        <input type="number" id="battery_sleepVoltage" value="2.9" step="0.1" min="2.5" max="4.2">
+                    </label>
+                </div>
+            </div>
+
+            <!-- Telemetry Settings -->
+            <div class="form-section">
+                <h3>Telemetry Settings</h3>
+                <div class="form-row-3">
+                    <label class="form-switch">
+                        <input type="checkbox" id="telemetry_active">
+                        Enable Sensor
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="telemetry_sendTelemetry">
+                        Send Telemetry via LoRa APRS
+                    </label>
+                    <label>
+                        <span>Temperature Correction (°C)</span>
+                        <input type="number" id="telemetry_temperatureCorrection" value="0.0" step="0.1" min="-5" max="5">
+                    </label>
+                </div>
+            </div>
+
+            <!-- Winlink Settings -->
+            <div class="form-section">
+                <h3>Winlink Settings</h3>
+                <div class="form-row-3">
+                    <label>
+                        <span>Password</span>
+                        <input type="text" id="winlink_password" value="ABCDEF">
+                    </label>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="form-section">
+                <h3>Notification Settings</h3>
+                <div class="form-row-4">
+                    <label class="form-switch">
+                        <input type="checkbox" id="notification_ledTx">
+                        Tx Led Active
+                    </label>
+                    <label>
+                        <span>Pin for Tx Led</span>
+                        <input type="number" id="notification_ledTxPin" value="13" min="0">
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="notification_ledMessage">
+                        Message Rx Led Active
+                    </label>
+                    <label>
+                        <span>Pin for Message Rx Led</span>
+                        <input type="number" id="notification_ledMessagePin" value="2" min="0">
+                    </label>
+                </div>
+                <div class="form-row-4">
+                    <label class="form-switch">
+                        <input type="checkbox" id="notification_buzzerActive">
+                        Buzzer Active
+                    </label>
+                    <label>
+                        <span>Buzzer Tone Pin</span>
+                        <input type="number" id="notification_buzzerPinTone" value="33" min="0">
+                    </label>
+                    <label>
+                        <span>Buzzer VCC Pin</span>
+                        <input type="number" id="notification_buzzerPinVcc" value="25" min="0">
+                    </label>
+                </div>
+                <div class="form-row-3">
+                    <label class="form-switch">
+                        <input type="checkbox" id="notification_bootUpBeep">
+                        Boot Up Beep
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="notification_txBeep">
+                        Tx Beep
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="notification_messageRxBeep">
+                        Message Rx Beep
+                    </label>
+                </div>
+                <div class="form-row-3">
+                    <label class="form-switch">
+                        <input type="checkbox" id="notification_stationBeep">
+                        Station Rx Beep
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="notification_lowBatteryBeep">
+                        Low Battery Beep
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="notification_shutDownBeep">
+                        Shut Down Beep
+                    </label>
+                </div>
+                <div class="form-row-4">
+                    <label class="form-switch">
+                        <input type="checkbox" id="notification_ledFlashlight">
+                        Flashlight Pin Active
+                    </label>
+                    <label>
+                        <span>Pin for Flashlight Pin</span>
+                        <input type="number" id="notification_ledFlashlightPin" value="14" min="0">
+                    </label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit">Upload Configuration</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let port;
+        let writer;
+
+        function showMessage(text, type = 'info') {
+            const msgEl = document.getElementById('message');
+            msgEl.textContent = text;
+            msgEl.className = `message show ${type}`;
+            setTimeout(() => msgEl.classList.remove('show'), 5000);
+        }
+
+        function updateStatus(connected) {
+            const statusEl = document.getElementById('status');
+            const connectBtn = document.getElementById('connectBtn');
+            const form = document.getElementById('LoRaAPRSTrackerForm');
+
+            if (connected) {
+                statusEl.textContent = 'Status: Board Connected';
+                statusEl.className = 'status-connected';
+                connectBtn.disabled = true;
+                connectBtn.textContent = '(Reload WebPage to Disconnect from Board)';
+                form.classList.add('active');
+            } else {
+                statusEl.textContent = 'Status: Board Not Connected';
+                statusEl.className = 'status-disconnected';
+                connectBtn.disabled = false;
+                connectBtn.textContent = 'Connect to the Board';
+                form.classList.remove('active');
+            }
+        }
+
+        document.getElementById('connectBtn').addEventListener('click', async () => {
+            if (port) {
+                try {
+                    await port.close();
+                    port = null;
+                    writer = null;
+                    updateStatus(false);
+                    showMessage('Disconnected from board', 'info');
+                } catch (error) {
+                    showMessage('Disconnection Error: ' + error.message, 'error');
+                }
+            } else {
+                try {
+                    port = await navigator.serial.requestPort();
+                    await port.open({ baudRate: 115200 });
+                    writer = port.writable.getWriter();
+                    updateStatus(true);
+                } catch (error) {
+                    showMessage('Connection Error: ' + error.message, 'error');
+                    port = null;
+                    writer = null;
+                }
+            }
+        });
+
+        async function sendJSON(dataObj) {
+            if (!writer) {
+                showMessage('Please connect the board first', 'error');
+                return false;
+            }
+
+            try {
+                const encoder = new TextEncoder();
+                const jsonData = JSON.stringify(dataObj);
+                await writer.write(encoder.encode(jsonData + "\n"));
+                showMessage('Configuration Sent Successfully!', 'success');
+                return true;
+            } catch (error) {
+                showMessage('Sending Error: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        document.getElementById('LoRaAPRSTrackerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const data = {
+                beacons: [
+                    {
+                        callsign: document.getElementById('beacon1_callsign').value || "NOCALL-7",
+                        symbol: document.getElementById('beacon1_symbol').value || "[",
+                        overlay: document.getElementById('beacon1_overlay').value || "/",
+                        micE: document.getElementById('beacon1_mic_e').value || "",
+                        comment: document.getElementById('beacon1_comment').value || "",
+                        smartBeaconActive: document.getElementById('beacon1_smartBeaconActive').checked,
+                        smartBeaconSetting: (parseInt(document.getElementById('beacon1_smartBeaconSetting').value, 10) & 0xFF) || 0,
+                        gpsEcoMode: document.getElementById('beacon1_gpsEcoMode').checked
+                    },
+                    {
+                        callsign: document.getElementById('beacon2_callsign').value || "NOCALL-7",
+                        symbol: document.getElementById('beacon2_symbol').value || ">",
+                        overlay: document.getElementById('beacon2_overlay').value || "/",
+                        micE: document.getElementById('beacon2_mic_e').value || "",
+                        comment: document.getElementById('beacon2_comment').value || "",
+                        smartBeaconActive: document.getElementById('beacon2_smartBeaconActive').checked,
+                        smartBeaconSetting: (parseInt(document.getElementById('beacon2_smartBeaconSetting').value, 10) & 0xFF) || 2,
+                        gpsEcoMode: document.getElementById('beacon2_gpsEcoMode').checked
+                    },
+                    {
+                        callsign: document.getElementById('beacon3_callsign').value || "NOCALL-7",
+                        symbol: document.getElementById('beacon3_symbol').value || "b",
+                        overlay: document.getElementById('beacon3_overlay').value || "/",
+                        micE: document.getElementById('beacon3_mic_e').value || "",
+                        comment: document.getElementById('beacon3_comment').value || "",
+                        smartBeaconActive: document.getElementById('beacon3_smartBeaconActive').checked,
+                        smartBeaconSetting: (parseInt(document.getElementById('beacon3_smartBeaconSetting').value, 10) & 0xFF) || 1,
+                        gpsEcoMode: document.getElementById('beacon3_gpsEcoMode').checked
+                    }
+                ],
+                other: {
+                    path: document.getElementById('other_path').value || "WIDE1-1",
+                    sendCommentAfterXBeacons: parseInt(document.getElementById('other_sendCommentAfterXBeacons').value) || 10,
+                    nonSmartBeaconRate: parseInt(document.getElementById('other_nonSmartBeaconRate').value) || 15,
+                    standingUpdateTime: parseInt(document.getElementById('other_standingUpdateTime').value) || 15,
+                    email: document.getElementById('other_email').value || "",
+                    rememberStationTime: parseInt(document.getElementById('other_rememberStationTime').value) || 30,
+                    sendAltitude: document.getElementById('other_sendAltitude').checked,
+                    disableGPS: document.getElementById('other_disableGPS').checked,
+                    simplifiedTrackerMode: document.getElementById('other_simplifiedTrackerMode').checked
+                },
+                display: {
+                    ecoMode: document.getElementById('display_ecoMode').checked,
+                    timeout: parseInt(document.getElementById('display_timeout').value) || 4,
+                    showSymbol: document.getElementById('display_showSymbol').checked,
+                    turn180: document.getElementById('display_turn180').checked
+                },
+                bluetooth: {
+                    active: document.getElementById('bluetooth_active').checked,
+                    deviceName: document.getElementById('bluetooth_deviceName').value || "LoRaTracker",
+                    useKISS: document.getElementById('bluetooth_useKISS').checked
+                },
+                lora: [
+                    {
+                        frequency: parseInt(document.getElementById('lora1_frequency').value) || 433775000,
+                        spreadingFactor: parseInt(document.getElementById('lora1_spreadingFactor').value) || 12,
+                        codingRate4: parseInt(document.getElementById('lora1_codingRate4').value) || 5,
+                        signalBandwidth: parseFloat(document.getElementById('lora1_signalBandwidth').value) || 125.0,
+                        power: parseInt(document.getElementById('lora1_power').value) || 20
+                    },
+                    {
+                        frequency: parseInt(document.getElementById('lora2_frequency').value) || 434855000,
+                        spreadingFactor: parseInt(document.getElementById('lora2_spreadingFactor').value) || 9,
+                        codingRate4: parseInt(document.getElementById('lora2_codingRate4').value) || 7,
+                        signalBandwidth: parseFloat(document.getElementById('lora2_signalBandwidth').value) || 125.0,
+                        power: parseInt(document.getElementById('lora2_power').value) || 20
+                    },
+                    {
+                        frequency: parseInt(document.getElementById('lora3_frequency').value) || 439912500,
+                        spreadingFactor: parseInt(document.getElementById('lora3_spreadingFactor').value) || 12,
+                        codingRate4: parseInt(document.getElementById('lora3_codingRate4').value) || 5,
+                        signalBandwidth: parseFloat(document.getElementById('lora3_signalBandwidth').value) || 125.0,
+                        power: parseInt(document.getElementById('lora3_power').value) || 20
+                    },
+                    {
+                        frequency: parseInt(document.getElementById('lora4_frequency').value) || 915000000,
+                        spreadingFactor: parseInt(document.getElementById('lora4_spreadingFactor').value) || 12,
+                        codingRate4: parseInt(document.getElementById('lora4_codingRate4').value) || 5,
+                        signalBandwidth: parseFloat(document.getElementById('lora4_signalBandwidth').value) || 125.0,
+                        power: parseInt(document.getElementById('lora4_power').value) || 20
+                    }
+                ],
+                battery: {
+                    sendVoltage: document.getElementById('battery_sendVoltage').checked,
+                    voltageAsTelemetry: document.getElementById('battery_voltageAsTelemetry').checked,
+                    sendVoltageAlways: document.getElementById('battery_sendVoltageAlways').checked,
+                    monitorVoltage: document.getElementById('battery_monitorVoltage').checked,
+                    sleepVoltage: parseFloat(document.getElementById('battery_sleepVoltage').value) || 2.9
+                },
+                telemetry: {
+                    active: document.getElementById('telemetry_active').checked,
+                    sendTelemetry: document.getElementById('telemetry_sendTelemetry').checked,
+                    temperatureCorrection: parseFloat(document.getElementById('telemetry_temperatureCorrection').value) || 0.0
+                },
+                winlink: {
+                    password: document.getElementById('winlink_password').value || "ABCDEF"
+                },                
+                notification: {
+                    ledTx: document.getElementById('notification_ledTx').checked,
+                    ledTxPin: parseInt(document.getElementById('notification_ledTxPin').value) || 13,
+                    ledMessage: document.getElementById('notification_ledMessage').checked,
+                    ledMessagePin: parseInt(document.getElementById('notification_ledMessagePin').value) || 2,
+                    buzzerActive: document.getElementById('notification_buzzerActive').checked,
+                    buzzerPinTone: parseInt(document.getElementById('notification_buzzerPinTone').value) || 33,
+                    buzzerPinVcc: parseInt(document.getElementById('notification_buzzerPinVcc').value) || 25,
+                    bootUpBeep: document.getElementById('notification_bootUpBeep').checked,
+                    txBeep: document.getElementById('notification_txBeep').checked,
+                    messageRxBeep: document.getElementById('notification_messageRxBeep').checked,
+                    stationBeep: document.getElementById('notification_stationBeep').checked,
+                    lowBatteryBeep: document.getElementById('notification_lowBatteryBeep').checked,
+                    shutDownBeep: document.getElementById('notification_shutDownBeep').checked,
+                    ledFlashlight: document.getElementById('notification_ledFlashlight').checked,
+                    ledFlashlightPin: parseInt(document.getElementById('notification_ledFlashlightPin').value) || 14
+                }
+            };
+
+            await sendJSON(data);
+        });
+
+        updateStatus(false);
+    </script>
+</body>
+</html>
