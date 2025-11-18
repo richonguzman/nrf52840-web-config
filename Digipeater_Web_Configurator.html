@@ -37,7 +37,7 @@
             line-height: 1.4; 
         }
 
-        .status-section {
+        .status-web-section {
             margin-bottom: 25px;
             padding: 18px;
             background: #212121;
@@ -45,17 +45,17 @@
             border: 1px solid #2a2a2a;
         }
 
-        #status {
+        #status-web {
             font-size: 14px;
             font-weight: bold;
             padding: 8px 0;
         }
 
-        .status-disconnected {
+        .status-web-disconnected {
             color: #ff4f5a;
         }
 
-        .status-connected {
+        .status-web-connected {
             color: #4effa3;
         }
 
@@ -156,18 +156,49 @@
             margin-bottom: 0;
         }
 
-        label input[type="checkbox"] {
-            margin-left: 0;
-            margin-right: 10px;
-            cursor: pointer;
-            width: 18px;
-            height: 18px;
-            accent-color: #2563eb;
+        /* Bootstrap-like switch style */
+        .form-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #b4b4b4;
+            margin-bottom: 16px;
         }
 
-        .checkbox-label {
-            flex-direction: row;
-            align-items: center;
+        .form-switch input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 40px;
+            height: 20px;
+            background-color: #444;
+            border-radius: 20px;
+            position: relative;
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: 1px solid #2a2a2a;
+            margin: 0;
+        }
+
+        .form-switch input[type="checkbox"]::before {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #ececec;
+            border-radius: 50%;
+            top: 1.5px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .form-switch input[type="checkbox"]:checked {
+            background-color: #2563eb;
+        }
+
+        .form-switch input[type="checkbox"]:checked::before {
+            transform: translateX(20px);
         }
 
         label input[type="text"]:focus,
@@ -262,9 +293,9 @@
     <div class="container">
         <h1>CA2RXU - LoRa APRS<br>(NRF52840) Digipeater Web Configurator</h1>
     
-        <div class="status-section">
+        <div class="status-web-section">
             <button id="connectBtn">Connect to the Board</button>
-            <p id="status" class="status-disconnected">Status: Not connected</p>
+            <p id="status-web" class="status-web-disconnected">Status: Not connected</p>
         </div>
 
         <div id="message" class="message"></div>
@@ -303,6 +334,15 @@
                         <input
                             type="text"
                             id="comment"
+                            value=""
+                        >
+                    </label>
+                    <label>
+                        <span>Status</span>
+                        <input
+                            type="text"
+                            id="status"
+                            value=""
                         >
                     </label>
                 </div>
@@ -372,7 +412,7 @@
                             <option value="2">WIDE2-n</option>
                         </select>
                     </label>
-                    <label class="checkbox-label">
+                    <label class="form-switch">
                         <input
                             type="checkbox"
                             id="digiUltraEcoMode"
@@ -444,24 +484,25 @@
             <!-- Battery -->
             <div class="form-section">
                 <h3>Battery</h3>
-                <label class="checkbox-label"><input type="checkbox" id="sendBatteryTelemetry"> Send Battery Voltage as Telemetry (Encoded Base91) </label>
+                <label class="form-switch">
+                    <input type="checkbox" id="sendBatteryTelemetry">
+                    Send Battery Voltage as Telemetry (Encoded Base91)
+                </label>
             </div>
 
             <!-- Wx Telemetry -->
             <div class="form-section">
                 <h3>Wx Telemetry<small> (Check Sensors Available in Wiki/Manual)</small></h3>
-                <div class="form-row">
-                    <label class="checkbox-label">
+                <div class="form-row-3">
+                    <label class="form-switch">
                         <input
                             type="checkbox"
                             id="wxSensorActive"
                         > 
                         Activate Wx Telemetry
                     </label>
-                </div>
-                <div class="form-row">
                     <label>
-                        <span>Height Correction (mts)</span>
+                        <span>Height Correction (m)</span>
                         <input
                             type="number"
                             id="heightCorrection"
@@ -470,7 +511,7 @@
                         >
                     </label>
                     <label>
-                        <span>Temperature Correction (°C)</span>
+                        <span>Temp Correction (°C)</span>
                         <input
                             type="number"
                             id="temperatureCorrection"
@@ -503,19 +544,19 @@
 
         // Status update
         function updateStatus(connected) {
-            const statusEl = document.getElementById('status');
+            const statusEl = document.getElementById('status-web');
             const connectBtn = document.getElementById('connectBtn');
             const form = document.getElementById('LoRaAPRSDigiForm');
 
             if (connected) {
                 statusEl.textContent = 'Status: Board Connected';
-                statusEl.className = 'status-connected';
+                statusEl.className = 'status-web-connected';
                 connectBtn.disabled = true;
                 connectBtn.textContent = '(Reload WebPage to Disconnect from Board)';
                 form.classList.add('active');
             } else {
                 statusEl.textContent = 'Status: Board Not Connected';
-                statusEl.className = 'status-disconnected';
+                statusEl.className = 'status-web-disconnected';
                 connectBtn.disabled = false;
                 connectBtn.textContent = 'Connect to the Board';
                 form.classList.remove('active');
@@ -616,6 +657,7 @@
                 callsign: document.getElementById('callsign').value,
                 path: document.getElementById('path').value || "WIDE1-1",
                 comment: document.getElementById('comment').value || "",
+                status: document.getElementById('status').value || "",
                 symbol: document.getElementById('symbol').value || "#",
                 overlay: document.getElementById('overlay').value || "L",
                 beaconInterval: parseInt(document.getElementById('beaconInterval').value) || 15,

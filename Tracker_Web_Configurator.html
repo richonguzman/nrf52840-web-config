@@ -37,7 +37,7 @@
             line-height: 1.4; 
         }
 
-        .status-section {
+        .status-web-section {
             margin-bottom: 25px;
             padding: 18px;
             background: #212121;
@@ -45,17 +45,17 @@
             border: 1px solid #2a2a2a;
         }
 
-        #status {
+        #status-web {
             font-size: 14px;
             font-weight: bold;
             padding: 8px 0;
         }
 
-        .status-disconnected {
+        .status-web-disconnected {
             color: #ff4f5a;
         }
 
-        .status-connected {
+        .status-web-connected {
             color: #4effa3;
         }
 
@@ -347,9 +347,9 @@
     <div class="container">
         <h1>CA2RXU - LoRa APRS<br>Tracker Web Configurator</h1>
     
-        <div class="status-section">
+        <div class="status-web-section">
             <button id="connectBtn">Connect to the Board</button>
-            <p id="status" class="status-disconnected">Status: Not connected</p>
+            <p id="status-web" class="status-web-disconnected">Status: Not connected</p>
         </div>
 
         <div id="message" class="message"></div>
@@ -397,7 +397,11 @@
                             </select>
                         </label>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row-3">
+                        <label>
+                            <span>Status</span>
+                            <input type="text" id="beacon1_status">
+                        </label>
                         <label class="form-switch">
                             <input type="checkbox" id="beacon1_gpsEcoMode">
                             GPS Eco Mode
@@ -443,7 +447,11 @@
                             </select>
                         </label>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row-3">
+                        <label>
+                            <span>Status</span>
+                            <input type="text" id="beacon2_status">
+                        </label>
                         <label class="form-switch">
                             <input type="checkbox" id="beacon2_gpsEcoMode">
                             GPS Eco Mode
@@ -489,7 +497,11 @@
                             </select>
                         </label>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row-3">
+                        <label>
+                            <span>Status</span>
+                            <input type="text" id="beacon3_status">
+                        </label>
                         <label class="form-switch">
                             <input type="checkbox" id="beacon3_gpsEcoMode">
                             GPS Eco Mode
@@ -922,19 +934,19 @@
         }
 
         function updateStatus(connected) {
-            const statusEl = document.getElementById('status');
+            const statusEl = document.getElementById('status-web');
             const connectBtn = document.getElementById('connectBtn');
             const form = document.getElementById('LoRaAPRSTrackerForm');
 
             if (connected) {
                 statusEl.textContent = 'Status: Board Connected';
-                statusEl.className = 'status-connected';
+                statusEl.className = 'status-web-connected';
                 connectBtn.disabled = true;
                 connectBtn.textContent = '(Reload WebPage to Disconnect from Board)';
                 form.classList.add('active');
             } else {
                 statusEl.textContent = 'Status: Board Not Connected';
-                statusEl.className = 'status-disconnected';
+                statusEl.className = 'status-web-disconnected';
                 connectBtn.disabled = false;
                 connectBtn.textContent = 'Connect to the Board';
                 form.classList.remove('active');
@@ -997,7 +1009,8 @@
                         comment: document.getElementById('beacon1_comment').value || "",
                         smartBeaconActive: document.getElementById('beacon1_smartBeaconActive').checked,
                         smartBeaconSetting: (parseInt(document.getElementById('beacon1_smartBeaconSetting').value, 10) & 0xFF) || 0,
-                        gpsEcoMode: document.getElementById('beacon1_gpsEcoMode').checked
+                        gpsEcoMode: document.getElementById('beacon1_gpsEcoMode').checked,
+                        status: document.getElementById('beacon1_status').value || ""
                     },
                     {
                         callsign: document.getElementById('beacon2_callsign').value || "NOCALL-7",
@@ -1007,7 +1020,8 @@
                         comment: document.getElementById('beacon2_comment').value || "",
                         smartBeaconActive: document.getElementById('beacon2_smartBeaconActive').checked,
                         smartBeaconSetting: (parseInt(document.getElementById('beacon2_smartBeaconSetting').value, 10) & 0xFF) || 2,
-                        gpsEcoMode: document.getElementById('beacon2_gpsEcoMode').checked
+                        gpsEcoMode: document.getElementById('beacon2_gpsEcoMode').checked,
+                        status: document.getElementById('beacon2_status').value || ""
                     },
                     {
                         callsign: document.getElementById('beacon3_callsign').value || "NOCALL-7",
@@ -1017,7 +1031,8 @@
                         comment: document.getElementById('beacon3_comment').value || "",
                         smartBeaconActive: document.getElementById('beacon3_smartBeaconActive').checked,
                         smartBeaconSetting: (parseInt(document.getElementById('beacon3_smartBeaconSetting').value, 10) & 0xFF) || 1,
-                        gpsEcoMode: document.getElementById('beacon3_gpsEcoMode').checked
+                        gpsEcoMode: document.getElementById('beacon3_gpsEcoMode').checked,
+                        status: document.getElementById('beacon3_status').value || ""
                     }
                 ],
                 other: {
