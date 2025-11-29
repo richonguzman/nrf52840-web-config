@@ -422,6 +422,21 @@
                 </div>
             </div>
 
+            <!-- Blacklist -->
+            <div class="form-section">
+                <h3>Blacklist</h3>
+                <div>
+                    <label>
+                        <span>Add Callsigns with space between them to Blacklist (* wildcard allowed)</span> 
+                        <input
+                            type="text"
+                            id="blacklist"
+                            value=""
+                        >
+                    </label>
+                </div>
+            </div>
+
             <!-- LoRa Settings -->
             <div class="form-section">
                 <h3>LoRa</h3>
@@ -666,6 +681,8 @@
                 
                 digiMode: parseInt(document.getElementById("digiMode").value) || 0,
                 digiUltraEcoMode: document.getElementById('digiUltraEcoMode').checked,
+
+                blacklist: document.getElementById('blacklist').value || "",
 
                 frequency: parseFloat(document.getElementById('frequency').value) || 433775000,
                 spreadingFactor: parseInt(document.getElementById('spreadingFactor').value) || 12,
