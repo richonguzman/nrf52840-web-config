@@ -398,6 +398,17 @@
                         >
                     </label>
                 </div>
+                <div class="form-row">
+                    <label>
+                        <span>APRS Position Ambiguity</span>
+                        <select id="ambiguityLevel"> 
+                            <option value="0" selected>No Ambiguity</option>
+                            <option value="1">~110 m forced Ambiguity</option>
+                            <option value="2">~1.1 km forced Ambiguity</option>
+                            <option value="3">~11 km forced Ambiguity</option>
+                        </select>
+                    </label>
+                </div>
             </div>
 
             <!-- Digipeater -->
@@ -407,7 +418,7 @@
                     <label>
                         <span>Digipeater Mode</span>
                         <select id="digiMode"> 
-                            <option value="0">OFF</option>
+                            <option value="0" selected>OFF</option>
                             <option value="1">WIDE1-1</option>
                             <option value="2">WIDE2-n</option>
                         </select>
@@ -678,6 +689,7 @@
                 beaconInterval: parseInt(document.getElementById('beaconInterval').value) || 15,
                 latitude: parseFloat(document.getElementById('latitude').value) || 0.0,
                 longitude: parseFloat(document.getElementById('longitude').value) || 0.0,
+                ambiguityLevel: parseInt(document.getElementById('ambiguityLevel').value) || 0,
                 
                 digiMode: parseInt(document.getElementById("digiMode").value) || 0,
                 digiUltraEcoMode: document.getElementById('digiUltraEcoMode').checked,
