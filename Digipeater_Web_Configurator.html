@@ -353,6 +353,7 @@
                             type="text"
                             id="symbol"
                             value="#"
+                            required
                         >
                     </label>
                     <label>
@@ -361,6 +362,7 @@
                             type="text"
                             id="overlay"
                             value="L"
+                            required
                         >
                     </label>
                     <label>
@@ -368,9 +370,10 @@
                         <input
                             type="number"
                             id="beaconInterval"
-                            min="15"
-                            step="5"
                             value="15"
+                            min="10"
+                            step="1"
+                            required
                         >
                     </label>
                 </div>
