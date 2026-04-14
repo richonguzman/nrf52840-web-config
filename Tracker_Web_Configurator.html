@@ -29,12 +29,12 @@
             border: 1px solid #2a2a2a;
         }
 
-        h1 { 
-            color: #ffffff; 
-            text-align: center; 
-            margin-bottom: 20px; 
-            font-size: 22px; 
-            line-height: 1.4; 
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+            line-height: 1.4;
         }
 
         .status-web-section {
@@ -226,6 +226,7 @@
 
         .button-group {
             display: flex;
+            flex-direction: column;
             gap: 10px;
             margin-top: 25px;
         }
@@ -266,8 +267,8 @@
         }
 
         .message.success {
-            background: #1f3e2d; 
-            color: #7bffb3; 
+            background: #1f3e2d;
+            color: #7bffb3;
             border: 1px solid #35a066;
         }
 
@@ -276,7 +277,7 @@
             color: #ff8a8a;
             border: 1px solid #ff4f4f;
         }
-        
+
         .message.info {
             background: #1f2a3b;
             color: #a5c8ff;
@@ -346,19 +347,17 @@
 <body>
     <div class="container">
         <h1>CA2RXU - LoRa APRS<br>Tracker Web Configurator</h1>
-    
+
         <div class="status-web-section">
             <button id="connectBtn">Connect to the Board</button>
             <p id="status-web" class="status-web-disconnected">Status: Not connected</p>
         </div>
 
-        <div id="message" class="message"></div>
-
         <form id="LoRaAPRSTrackerForm">
             <!-- Beacons Configuration -->
             <div class="form-section">
                 <h3>Beacons Configuration</h3>
-                
+
                 <div class="beacon-card">
                     <div class="beacon-header">Beacon 1</div>
                     <div class="form-row-beacon">
@@ -578,7 +577,7 @@
                     <label class="form-switch">
                         <input type="checkbox" id="display_showSymbol" checked>
                         Show Symbol
-                    </label>                        
+                    </label>
                     <label class="form-switch">
                         <input type="checkbox" id="display_turn180">
                         Turn 180°
@@ -608,7 +607,7 @@
             <!-- LoRa Settings -->
             <div class="form-section">
                 <h3>LoRa Configurations</h3>
-                
+
                 <div class="lora-card">
                     <div class="lora-header">LoRa Config 1</div>
                     <div class="form-row-5">
@@ -638,7 +637,7 @@
                         </label>
                         <label>
                             <span>BW (KHz)</span>
-                            <select id="lora1_signalBandwidth"> 
+                            <select id="lora1_signalBandwidth">
                                 <option value="62.5">62.5 KHz</option>
                                 <option value="125.0" selected>125.0 KHz</option>
                                 <option value="250.0">250.0 KHz</option>
@@ -681,7 +680,7 @@
                         </label>
                         <label>
                             <span>BW (KHz)</span>
-                            <select id="lora2_signalBandwidth"> 
+                            <select id="lora2_signalBandwidth">
                                 <option value="62.5">62.5 KHz</option>
                                 <option value="125.0" selected>125.0 KHz</option>
                                 <option value="250.0">250.0 KHz</option>
@@ -724,7 +723,7 @@
                         </label>
                         <label>
                             <span>BW (KHz)</span>
-                            <select id="lora3_signalBandwidth"> 
+                            <select id="lora3_signalBandwidth">
                                 <option value="62.5">62.5 KHz</option>
                                 <option value="125.0" selected>125.0 KHz</option>
                                 <option value="250.0">250.0 KHz</option>
@@ -767,7 +766,7 @@
                         </label>
                         <label>
                             <span>BW (KHz)</span>
-                            <select id="lora4_signalBandwidth"> 
+                            <select id="lora4_signalBandwidth">
                                 <option value="62.5">62.5 KHz</option>
                                 <option value="125.0" selected>125.0 KHz</option>
                                 <option value="250.0">250.0 KHz</option>
@@ -917,6 +916,7 @@
             </div>
 
             <div class="button-group">
+                <div id="message" class="message"></div>
                 <button type="submit">Upload Configuration</button>
             </div>
         </form>
@@ -1101,7 +1101,7 @@
                 },
                 winlink: {
                     password: document.getElementById('winlink_password').value || "ABCDEF"
-                },                
+                },
                 notification: {
                     ledTx: document.getElementById('notification_ledTx').checked,
                     ledTxPin: parseInt(document.getElementById('notification_ledTxPin').value) || 13,

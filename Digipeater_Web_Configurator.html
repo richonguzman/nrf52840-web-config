@@ -29,12 +29,12 @@
             border: 1px solid #2a2a2a;
         }
 
-        h1 { 
-            color: #ffffff; 
-            text-align: center; 
-            margin-bottom: 20px; 
-            font-size: 22px; 
-            line-height: 1.4; 
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+            line-height: 1.4;
         }
 
         .status-web-section {
@@ -218,13 +218,13 @@
 
         .button-group {
             display: flex;
+            flex-direction: column;
             gap: 10px;
             margin-top: 25px;
         }
 
         button[type="submit"],
         #sendDeleteCommandButton {
-            flex: 1;
             padding: 12px;
             font-size: 16px;
             border: none;
@@ -233,7 +233,7 @@
             font-weight: bold;
             transition: all 0.3s;
         }
-    
+
         button[type="submit"] {
             background: #28a745;
             color: white;
@@ -247,7 +247,7 @@
             background: #dc3545;
             color: white;
         }
-        
+
         #sendDeleteCommandButton:hover:not(:disabled) {
             background: #c82333;
         }
@@ -271,8 +271,8 @@
         }
 
         .message.success {
-            background: #1f3e2d; 
-            color: #7bffb3; 
+            background: #1f3e2d;
+            color: #7bffb3;
             border: 1px solid #35a066;
         }
 
@@ -281,7 +281,7 @@
             color: #ff8a8a;
             border: 1px solid #ff4f4f;
         }
-        
+
         .message.info {
             background: #1f2a3b;
             color: #a5c8ff;
@@ -292,13 +292,11 @@
 <body>
     <div class="container">
         <h1>CA2RXU - LoRa APRS<br>(NRF52840) Digipeater Web Configurator</h1>
-    
+
         <div class="status-web-section">
             <button id="connectBtn">Connect to the Board</button>
             <p id="status-web" class="status-web-disconnected">Status: Not connected</p>
         </div>
-
-        <div id="message" class="message"></div>
 
         <form id="LoRaAPRSDigiForm">
             <!-- APRS Settings -->
@@ -306,7 +304,7 @@
                 <h3>Station Configuration</h3>
                 <div class="form-row">
                     <label>
-                        <span>Callsign - SSID</span> 
+                        <span>Callsign - SSID</span>
                         <input
                             type="text"
                             id="callsign"
@@ -317,7 +315,7 @@
                     </label>
                     <label>
                         <span>Beacon Path</span>
-                        <select id="path"> 
+                        <select id="path">
                             <option value="0">(Empty)</option>
                             <option value="WIDE1-1" selected>WIDE1-1</option>
                             <option value="WIDE1-1,WIDE2-1">WIDE1-1,WIDE2-1</option>
@@ -326,7 +324,7 @@
                             <option value="WIDE2-2">WIDE2-2</option>
                             <option value="RFONLY">RFONLY</option>
                         </select>
-                    </label>                    
+                    </label>
                 </div>
                 <div class="form-row">
                     <label>
@@ -348,7 +346,7 @@
                 </div>
                 <div class="form-row-3">
                     <label>
-                        <span>Symbol</span> 
+                        <span>Symbol</span>
                         <input
                             type="text"
                             id="symbol"
@@ -404,7 +402,7 @@
                 <div class="form-row">
                     <label>
                         <span>APRS Position Ambiguity</span>
-                        <select id="ambiguityLevel"> 
+                        <select id="ambiguityLevel">
                             <option value="0" selected>No Ambiguity</option>
                             <option value="1">~110 m forced Ambiguity</option>
                             <option value="2">~1.1 km forced Ambiguity</option>
@@ -420,7 +418,7 @@
                 <div class="form-row">
                     <label>
                         <span>Digipeater Mode</span>
-                        <select id="digiMode"> 
+                        <select id="digiMode">
                             <option value="0" selected>OFF</option>
                             <option value="1">WIDE1-1</option>
                             <option value="2">WIDE2-n</option>
@@ -441,7 +439,7 @@
                 <h3>Blacklist</h3>
                 <div>
                     <label>
-                        <span>Add Callsigns with space between them to Blacklist (* wildcard allowed)</span> 
+                        <span>Add Callsigns with space between them to Blacklist (* wildcard allowed)</span>
                         <input
                             type="text"
                             id="blacklist"
@@ -479,7 +477,7 @@
                 <div class="form-row-3">
                     <label>
                         <span>Spreading Factor (SF)</span>
-                        <select id="spreadingFactor"> 
+                        <select id="spreadingFactor">
                             <option value="12" selected>12</option>
                             <option value="11">11</option>
                             <option value="10">10</option>
@@ -490,7 +488,7 @@
                     </label>
                     <label>
                         <span>Coding Rate (CR4)</span>
-                        <select id="codingRate4"> 
+                        <select id="codingRate4">
                             <option value="5" selected>5</option>
                             <option value="6">6</option>
                             <option value="7">7</option>
@@ -500,7 +498,7 @@
 
                     <label>
                         <span>Bandwidth (BW)</span>
-                        <select id="signalBandwidth"> 
+                        <select id="signalBandwidth">
                             <option value="62.5">62.5 KHz</option>
                             <option value="125.0" selected>125.0 KHz</option>
                             <option value="250.0">250.0 KHz</option>
@@ -527,7 +525,7 @@
                         <input
                             type="checkbox"
                             id="wxSensorActive"
-                        > 
+                        >
                         Activate Wx Telemetry
                     </label>
                     <label>
@@ -554,6 +552,7 @@
             </div>
 
             <div class="button-group">
+                <div id="message" class="message"></div>
                 <button type="submit">Upload Configuration</button>
             </div>
         </form>
@@ -693,7 +692,7 @@
                 latitude: parseFloat(document.getElementById('latitude').value) || 0.0,
                 longitude: parseFloat(document.getElementById('longitude').value) || 0.0,
                 ambiguityLevel: parseInt(document.getElementById('ambiguityLevel').value) || 0,
-                
+
                 digiMode: parseInt(document.getElementById("digiMode").value) || 0,
                 digiUltraEcoMode: document.getElementById('digiUltraEcoMode').checked,
 
@@ -709,9 +708,9 @@
 
                 wxSensorActive: document.getElementById('wxSensorActive').checked,
                 heightCorrection: parseInt(document.getElementById('heightCorrection').value) || 0,
-                temperatureCorrection: parseFloat(document.getElementById('temperatureCorrection').value) || 0.0                    
+                temperatureCorrection: parseFloat(document.getElementById('temperatureCorrection').value) || 0.0
             };
-      
+
         await sendJSON(data);
         });
 
