@@ -342,6 +342,17 @@
             transform: translateX(20px);
         }
 
+        .highlight {
+            animation: pulse 1s ease-in-out 2;
+            box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.4);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
     </style>
 </head>
 <body>
@@ -928,9 +939,33 @@
 
         function showMessage(text, type = 'info') {
             const msgEl = document.getElementById('message');
+            const submitBtn = document.querySelector('button[type="submit"]');
+
             msgEl.textContent = text;
             msgEl.className = `message show ${type}`;
+
+            // Asegurar que el usuario vea el botón + mensaje
+            scrollToElementIfNeeded(submitBtn);
+
+            // Highlight visual
+            submitBtn.classList.add('highlight');
+            setTimeout(() => submitBtn.classList.remove('highlight'), 2000);
+
             setTimeout(() => msgEl.classList.remove('show'), 5000);
+        }
+
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+            );
+        }
+
+        function scrollToElementIfNeeded(el) {
+            if (!isElementInViewport(el)) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
 
         function updateStatus(connected) {
