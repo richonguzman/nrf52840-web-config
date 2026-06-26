@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CA2RXU Firmware Download</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Theme tokens borrowed from the iGate web GUI (data_embed/index.html) */
+        :root {
+            --bg: #121417;
+            --panel: #1c2025;
+            --panel-2: #22272e;
+            --border: #2c333b;
+            --accent: #e23b3b;
+            --accent-soft: rgba(226, 59, 59, 0.14);
+            --text: #e6edf3;
+            --text-dim: #8b949e;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,9 +26,9 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background-color: #0d0d0d;
-            color: #ececec;
+            font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,20 +37,21 @@
         }
 
         .container {
-            background: #2a2a2a;
+            background: var(--panel);
             border-radius: 16px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
             padding: 40px;
-            max-width: 700px;
+            max-width: 560px;
             width: 100%;
-            border: 1px solid #3c3c3c;
+            border: 1px solid var(--border);
         }
 
         .title-main {
             text-align: center;
-            font-weight: bold;
-            font-size: 34px;
-            color: #ececec;
+            font-weight: 700;
+            font-size: 32px;
+            letter-spacing: 0.02em;
+            color: var(--accent);
             margin-bottom: 10px;
         }
 
@@ -47,38 +62,45 @@
 
         label {
             display: block;
-            color: #d0d0d0;
-            font-weight: 600;
+            color: var(--text-dim);
+            font-weight: 500;
             margin-bottom: 10px;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         select {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #4a4a4a;
+            border: 1px solid var(--border);
             border-radius: 10px;
             font-size: 16px;
-            background-color: #3a3a3a;
-            color: #ececec;
+            background-color: var(--bg);
+            color: var(--text);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23e23b3b' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.9rem center;
+            background-size: 15px 12px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
 
         select:hover {
-            border-color: #667eea;
-            background-color: #424242;
+            border-color: var(--accent);
         }
 
         select:focus {
             outline: none;
-            border-color: #667eea;
-            background-color: #424242;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.18rem var(--accent-soft);
         }
 
+        select optgroup,
         select option {
-            background-color: #3a3a3a;
-            color: #ececec;
+            background-color: var(--panel-2);
+            color: var(--text);
         }
 
         .button-group {
@@ -95,18 +117,18 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .btn-download {
-            background: #218838;
+            background: #2ea043;
             color: white;
         }
 
         .btn-download:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(33, 136, 56, 0.4);
-            background: #1e7e34;
+            box-shadow: 0 10px 20px rgba(46, 160, 67, 0.35);
+            background: #278d3a;
         }
 
         .btn-download:active {
@@ -114,27 +136,29 @@
         }
 
         .btn-download:disabled {
-            background: #744d4d;
+            background: var(--panel-2);
+            color: var(--text-dim);
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
 
         .info-box {
-            background: #3a3a3a;
-            border-left: 4px solid #3456ec;
+            background: var(--panel-2);
+            border-left: 4px solid var(--accent);
             padding: 15px;
             margin-top: 20px;
-            border-radius: 5px;
+            border-radius: 8px;
         }
 
         .info-box p {
-            color: #d0d0d0;
+            color: var(--text-dim);
             font-size: 14px;
             line-height: 1.6;
         }
 
         .info-box strong {
-            color: #ececec;
+            color: var(--text);
         }
 
         .configurator-section {
@@ -143,10 +167,10 @@
 
         .configurator-section label {
             display: block;
-            color: #d0d0d0;
-            font-weight: 600;
+            color: var(--text-dim);
+            font-weight: 500;
             margin-bottom: 15px;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .configurator-buttons {
@@ -162,15 +186,15 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: #2a4bde;
+            transition: all 0.2s ease;
+            background: #0d6efd;
             color: white;
         }
 
         .btn-configurator:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(72, 199, 103, 0.4);
-            background: #218838;
+            box-shadow: 0 10px 20px rgba(46, 160, 67, 0.35);
+            background: #2ea043;
         }
 
         .btn-configurator:active {
@@ -178,7 +202,7 @@
         }
 
         .card-footer {
-            color: #ccc;
+            color: var(--text-dim);
             font-size: 14px;
             text-align: center;
             padding: 20px;
@@ -194,15 +218,16 @@
 
         .divider {
             font-size: 20px;
-            color: #888;
+            color: var(--text-dim);
         }
-
-
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="title-main">CA2RXU - LoRa APRS Firmwares</h1>
+        <h1 class="title-main">
+            CA2RXU - NRF52840<br>
+            LoRa APRS Firmwares
+        </h1>
 
         <div class="download-section">
             <select id="fileSelector">
@@ -260,11 +285,11 @@
 
         <div class="info-box">
             <p><strong>💡 Instructions:</strong></p>
-            <p>1. Select the firmware for your board and click "Download Firmware".<br>
-               2. Connect your board to PC and double press RST button on your board.<br>
+            <p>1. Select the board's firmware and click "Download Firmware".<br>
+               2. Connect your board to PC. Double press board's RST button.<br>
                3. Copy the .uf2 firmware file into the board's folder on the PC.<br>
-               4. (The board will restart automatically after this copying is complete).<br>
-               5. Go into the desired Web Configurator for your station and follow the guidelines.
+               4. (Board will restart automatically after this copying is complete).<br>
+               5. Go to the chosen Web Configurator for your station.
             </p>
         </div>
 
@@ -284,7 +309,7 @@
         </div>
         <br>
         <div class="card-footer text-center">
-            &copy; 2025 CA2RXU
+            &copy; 2026 CA2RXU
             <br>
             <div class="sponsor-links">
                 <a href="http://paypal.me/richonguzman" target="_blank">
