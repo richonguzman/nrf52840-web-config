@@ -645,6 +645,12 @@
 
         // Validate data before sending
         function validateForm() {
+            const callsign = document.getElementById('callsign').value.trim().toUpperCase();
+            if (callsign === "" || /N[O0]CALL/.test(callsign)) {
+                showMessage('Change your callsign (NOCALL / N0CALL is not allowed)', 'error');
+                return false;
+            }
+
             const freq = parseFloat(document.getElementById('frequency').value);
             const sf = parseInt(document.getElementById('spreadingFactor').value);
             const cr = parseInt(document.getElementById('codingRate4').value);
