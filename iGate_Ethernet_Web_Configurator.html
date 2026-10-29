@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CA2RXU WebConfig</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #0d0d0d;
+            color: #ececec;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #3c3c3c;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            padding: 32px;
+            border: 1px solid #2a2a2a;
+        }
+
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+            line-height: 1.4;
+        }
+
+        .status-web-section {
+            margin-bottom: 25px;
+            padding: 18px;
+            background: #212121;
+            border-radius: 10px;
+            border: 1px solid #2a2a2a;
+        }
+
+        #status-web {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 0;
+        }
+
+        .status-web-disconnected {
+            color: #ff4f5a;
+        }
+
+        .status-web-connected {
+            color: #4effa3;
+        }
+
+        #connectBtn {
+            padding: 12px 20px;
+            font-size: 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        #connectBtn:hover:not(:disabled) {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        #connectBtn:disabled {
+            background: #2a2a2a;
+            cursor: not-allowed;
+        }
+
+        form {
+            display: none;
+        }
+
+        form.active {
+            display: block;
+        }
+
+        .form-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .form-section h3 {
+            font-size: 13px;
+            color: #a0a0a0;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .form-section .hint {
+            font-size: 12px;
+            color: #8a8a8a;
+            margin: -8px 0 16px 0;
+            line-height: 1.4;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #b4b4b4;
+            font-weight: 500;
+        }
+
+        label span {
+            margin-bottom: 6px;
+        }
+
+        label input[type="text"],
+        label input[type="number"],
+        label select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #212121;
+            color: #ececec;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        label input:disabled,
+        label select:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row label,
+        .form-row-3 label {
+            margin-bottom: 0;
+        }
+
+        /* Bootstrap-like switch style */
+        .form-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #b4b4b4;
+            margin-bottom: 16px;
+        }
+
+        .form-switch input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 40px;
+            height: 20px;
+            background-color: #444;
+            border-radius: 20px;
+            position: relative;
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: 1px solid #2a2a2a;
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .form-switch input[type="checkbox"]::before {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #ececec;
+            border-radius: 50%;
+            top: 1.5px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .form-switch input[type="checkbox"]:checked {
+            background-color: #2563eb;
+        }
+
+        .form-switch input[type="checkbox"]:checked::before {
+            transform: translateX(20px);
+        }
+
+        .form-switch input[type="checkbox"]:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        label input[type="text"]:focus,
+        label input[type="number"]:focus,
+        label select:focus {
+            outline: none;
+            border-color: #2563eb;
+            background-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        label input[type="text"]:hover,
+        label input[type="number"]:hover,
+        label select:hover {
+            border-color: #3a3a3a;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button[type="submit"],
+        #sendDeleteCommandButton {
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        button[type="submit"] {
+            background: #28a745;
+            color: white;
+        }
+
+        button[type="submit"]:hover:not(:disabled) {
+            background: #218838;
+        }
+
+        #sendDeleteCommandButton {
+            background: #dc3545;
+            color: white;
+        }
+
+        #sendDeleteCommandButton:hover:not(:disabled) {
+            background: #c82333;
+        }
+
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #1f3e2d;
+            color: #7bffb3;
+            border: 1px solid #35a066;
+        }
+
+        .message.error {
+            background: #3b1f1f;
+            color: #ff8a8a;
+            border: 1px solid #ff4f4f;
+        }
+
+        .message.info {
+            background: #1f2a3b;
+            color: #a5c8ff;
+            border: 1px solid #667eea;
+        }
+
+        @media (max-width: 520px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 20px 16px;
+            }
+
+            .form-row,
+            .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CA2RXU - LoRa APRS<br>(NRF52840) iGate Ethernet Web Configurator</h1>
+
+        <div class="status-web-section">
+            <button id="connectBtn">Connect to the Board</button>
+            <p id="status-web" class="status-web-disconnected">Status: Not connected</p>
+        </div>
+
+        <form id="LoRaAPRSiGateForm">
+            <!-- APRS Settings -->
+            <div class="form-section">
+                <h3>Station Configuration</h3>
+                <div class="form-row">
+                    <label>
+                        <span>Callsign - SSID</span>
+                        <input
+                            type="text"
+                            id="callsign"
+                            placeholder="NOCALL-10"
+                            required
+                            oninput="this.value = this.value.toUpperCase();"
+                        >
+                    </label>
+                    <label>
+                        <span>Beacon Path</span>
+                        <select id="path">
+                            <option value="0">(Empty)</option>
+                            <option value="WIDE1-1" selected>WIDE1-1</option>
+                            <option value="WIDE1-1,WIDE2-1">WIDE1-1,WIDE2-1</option>
+                            <option value="WIDE1-1,WIDE2-2">WIDE1-1,WIDE2-2</option>
+                            <option value="WIDE2-1">WIDE2-1</option>
+                            <option value="WIDE2-2">WIDE2-2</option>
+                            <option value="RFONLY">RFONLY</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>
+                        <span>Beacon Comment</span>
+                        <input
+                            type="text"
+                            id="comment"
+                            value="LoRa APRS"
+                        >
+                    </label>
+                    <label>
+                        <span>Status</span>
+                        <input
+                            type="text"
+                            id="status"
+                            value=""
+                        >
+                    </label>
+                </div>
+                <div class="form-row-3">
+                    <label>
+                        <span>Symbol</span>
+                        <input
+                            type="text"
+                            id="symbol"
+                            value="a"
+                            required
+                        >
+                    </label>
+                    <label>
+                        <span>Overlay</span>
+                        <input
+                            type="text"
+                            id="overlay"
+                            value="L"
+                            required
+                        >
+                    </label>
+                    <label>
+                        <span>Beacon Interval(min)</span>
+                        <input
+                            type="number"
+                            id="beaconInterval"
+                            value="15"
+                            min="10"
+                            step="1"
+                            required
+                        >
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>
+                        <span>Latitude (degrees)</span>
+                        <input
+                            type="number"
+                            id="latitude"
+                            min="-90"
+                            max="90"
+                            step="any"
+                            required
+                        >
+                    </label>
+                    <label>
+                        <span>Longitude (degrees)</span>
+                        <input
+                            type="number"
+                            id="longitude"
+                            min="-180"
+                            max="180"
+                            step="any"
+                            required
+                        >
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>
+                        <span>APRS Position Ambiguity</span>
+                        <select id="ambiguityLevel">
+                            <option value="0" selected>No Ambiguity</option>
+                            <option value="1">~110 m forced Ambiguity</option>
+                            <option value="2">~1.1 km forced Ambiguity</option>
+                            <option value="3">~11 km forced Ambiguity</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Beaconing -->
+            <div class="form-section">
+                <h3>Beaconing</h3>
+                <div class="form-row">
+                    <label class="form-switch">
+                        <input type="checkbox" id="beaconSendViaAPRSIS" checked>
+                        Send Beacon via APRS-IS
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="beaconSendViaRF">
+                        Send Beacon via RF
+                    </label>
+                </div>
+            </div>
+
+            <!-- APRS-IS -->
+            <div class="form-section">
+                <h3>APRS-IS</h3>
+                <label class="form-switch">
+                    <input type="checkbox" id="aprsisActive" checked>
+                    Enable APRS-IS Connection
+                </label>
+                <div class="form-row">
+                    <label class="form-switch">
+                        <input type="checkbox" id="aprsisMessagesToRF" checked>
+                        Gate APRS-IS Messages to RF
+                    </label>
+                    <label class="form-switch">
+                        <input type="checkbox" id="aprsisObjectsToRF">
+                        Gate APRS-IS Objects to RF
+                    </label>
+                </div>
+                <p class="hint">Messages are only gated to RF when the addressee was heard via LoRa in the last 30 min.</p>
+                <div class="form-row">
+                    <label>
+                        <span>Server</span>
+                        <input
+                            type="text"
+                            id="aprsisServer"
+                            placeholder="rotate.aprs2.net"
+                            value="rotate.aprs2.net"
+                        >
+                    </label>
+                    <label>
+                        <span>Port</span>
+                        <input
+                            type="number"
+                            id="aprsisPort"
+                            min="1"
+                            max="65535"
+                            value="14580"
+                        >
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>
+                        <span>Passcode</span>
+                        <input
+                            type="text"
+                            id="aprsisPasscode"
+                            inputmode="numeric"
+                            placeholder="12345"
+                            value=""
+                        >
+                    </label>
+                    <label>
+                        <span>Filter</span>
+                        <input
+                            type="text"
+                            id="aprsisFilter"
+                            value="m/80"
+                        >
+                    </label>
+                </div>
+            </div>
+
+            <!-- Digipeater -->
+            <div class="form-section">
+                <h3>Digipeater</h3>
+                <div class="form-row">
+                    <label>
+                        <span>Digipeater Mode</span>
+                        <select id="digiMode">
+                            <option value="0" selected>OFF</option>
+                            <option value="1">WIDE1-1</option>
+                            <option value="2">WIDE2-n</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Blacklist -->
+            <div class="form-section">
+                <h3>Blacklist</h3>
+                <div>
+                    <label>
+                        <span>Add Callsigns with space between them to Blacklist (* wildcard allowed)</span>
+                        <input
+                            type="text"
+                            id="blacklist"
+                            value=""
+                        >
+                    </label>
+                </div>
+            </div>
+
+            <!-- LoRa Settings -->
+            <div class="form-section">
+                <h3>LoRa</h3>
+                <div class="form-row">
+                    <label>
+                        <span>Frequency (Hz)</span>
+                        <input
+                            type="number"
+                            id="frequency"
+                            min="430000000"
+                            max="928000000"
+                            value="433775000"
+                        >
+                    </label>
+                    <label>
+                        <span>Power (dBm)</span>
+                        <input
+                            type="number"
+                            id="power"
+                            min="2"
+                            max="22"
+                            value="22"
+                        >
+                    </label>
+                </div>
+                <div class="form-row-3">
+                    <label>
+                        <span>Spreading Factor (SF)</span>
+                        <select id="spreadingFactor">
+                            <option value="12" selected>12</option>
+                            <option value="11">11</option>
+                            <option value="10">10</option>
+                            <option value="9">9</option>
+                            <option value="8">8</option>
+                            <option value="7">7</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Coding Rate (CR4)</span>
+                        <select id="codingRate4">
+                            <option value="5" selected>5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <span>Bandwidth (BW)</span>
+                        <select id="signalBandwidth">
+                            <option value="62.5">62.5 KHz</option>
+                            <option value="125.0" selected>125.0 KHz</option>
+                            <option value="250.0">250.0 KHz</option>
+                            <option value="500.0">500.0 KHz</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Battery -->
+            <div class="form-section">
+                <h3>Battery</h3>
+                <label class="form-switch">
+                    <input type="checkbox" id="sendBatteryTelemetry">
+                    Send Battery Voltage as Telemetry (Encoded Base91)
+                </label>
+            </div>
+
+            <!-- Wx Telemetry -->
+            <div class="form-section">
+                <h3>Wx Telemetry<small> (Check Sensors Available in Wiki/Manual)</small></h3>
+                <div class="form-row-3">
+                    <label class="form-switch">
+                        <input
+                            type="checkbox"
+                            id="wxSensorActive"
+                        >
+                        Activate Wx Telemetry
+                    </label>
+                    <label>
+                        <span>Height Correction (m)</span>
+                        <input
+                            type="number"
+                            id="heightCorrection"
+                            min="0"
+                            value="0"
+                        >
+                    </label>
+                    <label>
+                        <span>Temp Correction (°C)</span>
+                        <input
+                            type="number"
+                            id="temperatureCorrection"
+                            step="0.1"
+                            min="-5"
+                            max="5"
+                            value="0"
+                        >
+                    </label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <div id="message" class="message"></div>
+                <button type="submit">Upload Configuration</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let port;
+        let writer;
+
+        // Show Message
+        function showMessage(text, type = 'info') {
+            const msgEl = document.getElementById('message');
+            msgEl.textContent = text;
+            msgEl.className = `message show ${type}`;
+            setTimeout(() => msgEl.classList.remove('show'), 5000);
+        }
+
+        // Status update
+        function updateStatus(connected) {
+            const statusEl = document.getElementById('status-web');
+            const connectBtn = document.getElementById('connectBtn');
+            const form = document.getElementById('LoRaAPRSiGateForm');
+
+            if (connected) {
+                statusEl.textContent = 'Status: Board Connected';
+                statusEl.className = 'status-web-connected';
+                connectBtn.disabled = true;
+                connectBtn.textContent = '(Reload WebPage to Disconnect from Board)';
+                form.classList.add('active');
+            } else {
+                statusEl.textContent = 'Status: Board Not Connected';
+                statusEl.className = 'status-web-disconnected';
+                connectBtn.disabled = false;
+                connectBtn.textContent = 'Connect to the Board';
+                form.classList.remove('active');
+            }
+        }
+
+        // APRS-IS fields only make sense with the APRS-IS connection enabled
+        const aprsisFields = ['aprsisMessagesToRF', 'aprsisObjectsToRF', 'aprsisServer', 'aprsisPort', 'aprsisPasscode', 'aprsisFilter'];
+        function updateAPRSISFields() {
+            const active = document.getElementById('aprsisActive').checked;
+            aprsisFields.forEach(id => document.getElementById(id).disabled = !active);
+        }
+        document.getElementById('aprsisActive').addEventListener('change', updateAPRSISFields);
+
+        // APRS-IS passcode (hash of the callsign without SSID)
+        function generatePasscode(callsign) {
+            const base = callsign.split('-')[0].toUpperCase();
+            let hash = 0x73e2;
+            for (let i = 0; i < base.length; i += 2) {
+                hash ^= base.charCodeAt(i) << 8;
+                if (i + 1 < base.length) hash ^= base.charCodeAt(i + 1);
+            }
+            return hash & 0x7fff;
+        }
+
+        // Connect/Disconnect to Serial
+        document.getElementById('connectBtn').addEventListener('click', async () => {
+            if (port) {
+                // Disconnect
+                try {
+                    await port.close();
+                    port = null;
+                    writer = null;
+                    updateStatus(false);
+                    showMessage('Disconnected from board', 'info');
+                } catch (error) {
+                    showMessage('Disconnection Error: ' + error.message, 'error');
+                }
+            } else {
+                // Connect
+                try {
+                    port = await navigator.serial.requestPort();
+                    await port.open({ baudRate: 115200 });
+                    writer = port.writable.getWriter();
+                    updateStatus(true);
+                    //showMessage('Connected to board', 'success');
+                } catch (error) {
+                    showMessage('Connection Error: ' + error.message, 'error');
+                    port = null;
+                    writer = null;
+                }
+            }
+        });
+
+        // Send JSON
+        async function sendJSON(dataObj) {
+            if (!writer) {
+                showMessage('Please connect the board first', 'error');
+                return false;
+            }
+
+            try {
+                const encoder = new TextEncoder();
+                const jsonData = JSON.stringify(dataObj);
+                await writer.write(encoder.encode(jsonData + "\n"));
+                showMessage('Data Sent', 'success');
+                return true;
+            } catch (error) {
+                showMessage('Sending Error: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        // Validate data before sending
+        function validateForm() {
+            const callsign = document.getElementById('callsign').value.trim().toUpperCase();
+            if (callsign === "" || /N[O0]CALL/.test(callsign)) {
+                showMessage('Change your callsign (NOCALL / N0CALL is not allowed)', 'error');
+                return false;
+            }
+
+            const aprsisActive = document.getElementById('aprsisActive').checked;
+            if (document.getElementById('beaconSendViaAPRSIS').checked && !aprsisActive) {
+                showMessage('Beacon via APRS-IS needs the APRS-IS connection enabled', 'error');
+                return false;
+            }
+
+            if (aprsisActive) {
+                const server = document.getElementById('aprsisServer').value.trim();
+                const aprsisPort = parseInt(document.getElementById('aprsisPort').value);
+                const passcode = document.getElementById('aprsisPasscode').value.trim();
+
+                if (server === "") {
+                    showMessage('APRS-IS Server can not be empty', 'error');
+                    return false;
+                }
+
+                if (!aprsisPort || aprsisPort < 1 || aprsisPort > 65535) {
+                    showMessage('APRS-IS Port must be 1-65535', 'error');
+                    return false;
+                }
+
+                if (!/^\d+$/.test(passcode) || parseInt(passcode) !== generatePasscode(callsign)) {
+                    showMessage('APRS-IS Passcode is not valid for ' + callsign.split('-')[0], 'error');
+                    return false;
+                }
+            }
+
+            const freq = parseFloat(document.getElementById('frequency').value);
+            const sf = parseInt(document.getElementById('spreadingFactor').value);
+            const cr = parseInt(document.getElementById('codingRate4').value);
+            const bw = parseFloat(document.getElementById('signalBandwidth').value);
+            const power = parseInt(document.getElementById('power').value);
+
+            if (freq && (freq < 430000000 || freq > 928000000)) {
+                showMessage('Frequency out of range (430-928 MHz)', 'error');
+                return false;
+            }
+
+            if (sf && (sf < 7 || sf > 12)) {
+                showMessage('Spreading Factor must be 7-12', 'error');
+                return false;
+            }
+
+            if (cr && (cr < 5 || cr > 8)) {
+                showMessage('Coding Rate must be 5-8', 'error');
+                return false;
+            }
+
+            if (bw && (bw < 62.5 || bw > 500.0)) {
+                showMessage('Bandwidth out of range (62.5KHz-500KHz)', 'error');
+                return false;
+            }
+
+            if (power && (power < 2 || power > 22)) {
+                showMessage('Power must be 2-22 dBm', 'error');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Submit form
+        document.getElementById('LoRaAPRSiGateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!validateForm()) return;
+
+            const data = {
+                callsign: document.getElementById('callsign').value.trim(),
+                path: document.getElementById('path').value || "WIDE1-1",
+                comment: document.getElementById('comment').value || "",
+                status: document.getElementById('status').value || "",
+                symbol: document.getElementById('symbol').value || "a",
+                overlay: document.getElementById('overlay').value || "L",
+                beaconInterval: parseInt(document.getElementById('beaconInterval').value) || 15,
+                beaconSendViaAPRSIS: document.getElementById('beaconSendViaAPRSIS').checked,
+                beaconSendViaRF: document.getElementById('beaconSendViaRF').checked,
+                latitude: parseFloat(document.getElementById('latitude').value) || 0.0,
+                longitude: parseFloat(document.getElementById('longitude').value) || 0.0,
+                ambiguityLevel: parseInt(document.getElementById('ambiguityLevel').value) || 0,
+
+                aprs_is: {
+                    active: document.getElementById('aprsisActive').checked,
+                    passcode: document.getElementById('aprsisPasscode').value.trim(),
+                    server: document.getElementById('aprsisServer').value.trim() || "rotate.aprs2.net",
+                    port: parseInt(document.getElementById('aprsisPort').value) || 14580,
+                    filter: document.getElementById('aprsisFilter').value.trim(),
+                    messagesToRF: document.getElementById('aprsisMessagesToRF').checked,
+                    objectsToRF: document.getElementById('aprsisObjectsToRF').checked
+                },
+
+                digiMode: parseInt(document.getElementById("digiMode").value) || 0,
+                digiUltraEcoMode: false,        // Ethernet iGate never sleeps
+
+                blacklist: document.getElementById('blacklist').value || "",
+
+                frequency: parseFloat(document.getElementById('frequency').value) || 433775000,
+                spreadingFactor: parseInt(document.getElementById('spreadingFactor').value) || 12,
+                codingRate4: parseInt(document.getElementById('codingRate4').value) || 5,
+                signalBandwidth: parseFloat(document.getElementById('signalBandwidth').value) || 125.0,
+                power: parseInt(document.getElementById('power').value) || 20,
+
+                sendBatteryTelemetry: document.getElementById('sendBatteryTelemetry').checked,
+
+                wxSensorActive: document.getElementById('wxSensorActive').checked,
+                heightCorrection: parseInt(document.getElementById('heightCorrection').value) || 0,
+                temperatureCorrection: parseFloat(document.getElementById('temperatureCorrection').value) || 0.0
+            };
+
+        await sendJSON(data);
+        });
+
+        // Status Init
+        updateStatus(false);
+        updateAPRSISFields();
+    </script>
+</body>
+</html>
