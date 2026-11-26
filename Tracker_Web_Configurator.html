@@ -374,7 +374,7 @@
                     <div class="form-row-beacon">
                         <label>
                             <span>Callsign</span>
-                            <input type="text" id="beacon1_callsign" value="NOCALL-7" required oninput="this.value = this.value.toUpperCase();">
+                            <input type="text" id="beacon1_callsign" value="NOCALL-7" required oninput="this.value = this.value.toUpperCase().replace(/\s+/g, '');">
                         </label>
                         <label>
                             <span>Symbol</span>
@@ -424,7 +424,7 @@
                     <div class="form-row-beacon">
                         <label>
                             <span>Callsign</span>
-                            <input type="text" id="beacon2_callsign" value="NOCALL-7" required oninput="this.value = this.value.toUpperCase();">
+                            <input type="text" id="beacon2_callsign" value="NOCALL-7" required oninput="this.value = this.value.toUpperCase().replace(/\s+/g, '');">
                         </label>
                         <label>
                             <span>Symbol</span>
@@ -474,7 +474,7 @@
                     <div class="form-row-beacon">
                         <label>
                             <span>Callsign</span>
-                            <input type="text" id="beacon3_callsign" value="NOCALL-7" oninput="this.value = this.value.toUpperCase();">
+                            <input type="text" id="beacon3_callsign" value="NOCALL-7" oninput="this.value = this.value.toUpperCase().replace(/\s+/g, '');">
                         </label>
                         <label>
                             <span>Symbol</span>
@@ -1041,7 +1041,7 @@
             const data = {
                 beacons: [
                     {
-                        callsign: document.getElementById('beacon1_callsign').value || "NOCALL-7",
+                        callsign: document.getElementById('beacon1_callsign').value.replace(/\s+/g, '').toUpperCase() || "NOCALL-7",
                         symbol: document.getElementById('beacon1_symbol').value || "[",
                         overlay: document.getElementById('beacon1_overlay').value || "/",
                         micE: document.getElementById('beacon1_mic_e').value || "",
@@ -1052,7 +1052,7 @@
                         status: document.getElementById('beacon1_status').value || ""
                     },
                     {
-                        callsign: document.getElementById('beacon2_callsign').value || "NOCALL-7",
+                        callsign: document.getElementById('beacon2_callsign').value.replace(/\s+/g, '').toUpperCase() || "NOCALL-7",
                         symbol: document.getElementById('beacon2_symbol').value || ">",
                         overlay: document.getElementById('beacon2_overlay').value || "/",
                         micE: document.getElementById('beacon2_mic_e').value || "",
@@ -1063,7 +1063,7 @@
                         status: document.getElementById('beacon2_status').value || ""
                     },
                     {
-                        callsign: document.getElementById('beacon3_callsign').value || "NOCALL-7",
+                        callsign: document.getElementById('beacon3_callsign').value.replace(/\s+/g, '').toUpperCase() || "NOCALL-7",
                         symbol: document.getElementById('beacon3_symbol').value || "b",
                         overlay: document.getElementById('beacon3_overlay').value || "/",
                         micE: document.getElementById('beacon3_mic_e').value || "",

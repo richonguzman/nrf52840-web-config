@@ -344,7 +344,7 @@
                             id="callsign"
                             placeholder="NOCALL-10"
                             required
-                            oninput="this.value = this.value.toUpperCase();"
+                            oninput="this.value = this.value.toUpperCase().replace(/\s+/g, '');"
                         >
                     </label>
                     <label>
@@ -763,7 +763,7 @@
 
         // Validate data before sending
         function validateForm() {
-            const callsign = document.getElementById('callsign').value.trim().toUpperCase();
+            const callsign = document.getElementById('callsign').value.replace(/\s+/g, '').toUpperCase();
             if (callsign === "" || /N[O0]CALL/.test(callsign)) {
                 showMessage('Change your callsign (NOCALL / N0CALL is not allowed)', 'error');
                 return false;
@@ -837,7 +837,7 @@
             if (!validateForm()) return;
 
             const data = {
-                callsign: document.getElementById('callsign').value.trim(),
+                callsign: document.getElementById('callsign').value.replace(/\s+/g, '').toUpperCase(),
                 path: document.getElementById('path').value || "WIDE1-1",
                 comment: document.getElementById('comment').value || "",
                 status: document.getElementById('status').value || "",

@@ -279,7 +279,7 @@
                             id="callsign"
                             placeholder="NOCALL-1"
                             required
-                            oninput="this.value = this.value.toUpperCase();"
+                            oninput="this.value = this.value.toUpperCase().replace(/\s+/g, '');"
                         >
                     </label>
                     <label>
@@ -504,7 +504,7 @@
             if (!validateForm()) return;
 
             const data = {
-                callsign: document.getElementById('callsign').value,
+                callsign: document.getElementById('callsign').value.replace(/\s+/g, '').toUpperCase(),
                 comment: document.getElementById('comment').value || "",
                 symbol: document.getElementById('symbol').value || "#",
                 overlay: document.getElementById('overlay').value || "L",
